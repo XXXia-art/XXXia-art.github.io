@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +7,14 @@
 
   <style>
     :root {
-      --link-color: #3798e3;
-      --text-color: #222;
-      --muted-color: #666;
-      --bg-color: #ffffff;
-      --section-gap: 42px;
+      --link-color: #2563eb;
+      --text-color: #1f2937;
+      --muted-color: #6b7280;
+      --bg-color: #f5f1e8;
+      --card-color: rgba(255, 255, 255, 0.82);
+      --section-gap: 44px;
+      --shadow-soft: 0 18px 44px rgba(83, 63, 27, 0.08);
+      --border-soft: rgba(145, 118, 74, 0.16);
     }
 
     * {
@@ -20,18 +23,14 @@
 
     body {
       margin: 0;
-      background: var(--bg-color);
       color: var(--text-color);
       font-family: "Georgia", "Times New Roman", "Noto Serif SC", "Songti SC", serif;
       line-height: 1.75;
       font-size: 17px;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 48px 24px 64px;
+      background:
+        radial-gradient(circle at top left, rgba(214, 171, 96, 0.18), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(130, 167, 215, 0.2), transparent 28%),
+        var(--bg-color);
     }
 
     a {
@@ -43,12 +42,28 @@
       text-decoration: underline;
     }
 
+    .container {
+      width: 100%;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+    }
+
+    .panel {
+      background: var(--card-color);
+      border: 1px solid var(--border-soft);
+      border-radius: 28px;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(10px);
+    }
+
     .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 36px;
-      margin-bottom: 28px;
+      padding: 32px;
+      margin-bottom: 24px;
     }
 
     .intro {
@@ -56,10 +71,11 @@
     }
 
     .name {
-      font-size: 34px;
-      font-weight: 700;
       margin: 0 0 14px;
-      color: #111;
+      font-size: 38px;
+      font-weight: 700;
+      color: #111827;
+      letter-spacing: 0.01em;
     }
 
     .subtitle {
@@ -73,7 +89,7 @@
     }
 
     .links {
-      margin-top: 12px;
+      margin-top: 14px;
       font-size: 16px;
     }
 
@@ -83,7 +99,7 @@
     }
 
     .badge-row {
-      margin-top: 14px;
+      margin-top: 16px;
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
@@ -103,20 +119,22 @@
     .photo-box img.profile-photo {
       width: 100%;
       max-width: 220px;
-      border-radius: 10px;
+      border-radius: 18px;
       display: block;
-      margin: 0 auto 12px;
+      margin: 0 auto;
+      box-shadow: 0 16px 36px rgba(31, 41, 55, 0.16);
     }
 
     .section {
       margin-top: var(--section-gap);
+      padding: 0 8px;
     }
 
     .section-title {
       font-size: 28px;
       margin: 0 0 16px;
       font-weight: 700;
-      color: #111;
+      color: #111827;
     }
 
     .section p {
@@ -129,13 +147,6 @@
     }
 
     li {
-      margin-bottom: 10px;
-    }
-
-    .news-list li,
-    .project-list li,
-    .edu-list li,
-    .exp-list li {
       margin-bottom: 12px;
     }
 
@@ -156,17 +167,109 @@
       height: 22px;
     }
 
+    .interactive-card {
+      position: relative;
+      overflow: hidden;
+      padding: 26px;
+      margin-top: 18px;
+      border-radius: 26px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(248, 243, 233, 0.85)),
+        #fff;
+      border: 1px solid rgba(143, 113, 70, 0.18);
+      box-shadow: 0 18px 38px rgba(99, 73, 28, 0.08);
+    }
+
+    .interactive-kicker {
+      margin: 0 0 8px;
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #9a6b31;
+    }
+
+    .interactive-heading {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.2;
+      color: #111827;
+    }
+
+    .interactive-note {
+      margin: 10px 0 18px;
+      color: var(--muted-color);
+      max-width: 620px;
+    }
+
+    .interactive-stage {
+      position: relative;
+      min-height: 320px;
+      padding: 8px 0;
+      cursor: none;
+    }
+
+    .interactive-flow {
+      position: relative;
+      min-height: 260px;
+      font-size: 18px;
+      line-height: 1.82;
+      color: #243041;
+    }
+
+    .flow-fragment {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: block;
+      white-space: pre-wrap;
+      word-break: break-word;
+      will-change: transform;
+    }
+
+    .cursor-bubble {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 140px;
+      height: 140px;
+      border-radius: 999px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.08) 42%, rgba(70, 110, 188, 0.22) 72%, rgba(41, 71, 126, 0.3) 100%);
+      border: 1px solid rgba(67, 98, 157, 0.22);
+      box-shadow:
+        0 20px 36px rgba(87, 116, 175, 0.18),
+        inset 0 0 26px rgba(255, 255, 255, 0.64);
+      transform: translate(-50%, -50%);
+      transition: opacity 160ms ease;
+      opacity: 0.96;
+      backdrop-filter: blur(5px);
+    }
+
+    .interactive-card.is-idle .cursor-bubble {
+      opacity: 0.8;
+    }
+
+    .fallback-copy {
+      margin: 0;
+    }
+
     .footer {
       margin-top: 56px;
       text-align: center;
-      color: #999;
+      color: #8b8b8b;
       font-size: 14px;
     }
 
     @media (max-width: 768px) {
+      .container {
+        padding: 28px 16px 56px;
+      }
+
       .header {
         flex-direction: column-reverse;
         align-items: flex-start;
+        padding: 24px;
       }
 
       .photo-box {
@@ -178,25 +281,43 @@
       }
 
       .name {
-        font-size: 30px;
+        font-size: 31px;
       }
 
       .section-title {
         font-size: 24px;
+      }
+
+      .interactive-card {
+        padding: 22px 18px;
+      }
+
+      .interactive-heading {
+        font-size: 26px;
+      }
+
+      .interactive-stage {
+        min-height: 380px;
+        cursor: auto;
+      }
+
+      .interactive-flow {
+        font-size: 17px;
+      }
+
+      .cursor-bubble {
+        width: 110px;
+        height: 110px;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-
-    <div class="header">
+    <div class="header panel">
       <div class="intro">
-        <h1 class="name">Puzhi Xia 夏浦智</h1>
-
-        <p class="subtitle">
-          Junior Student, Southeast University
-        </p>
+        <h1 class="name">Puzhi Xia</h1>
+        <p class="subtitle">Junior Student, Southeast University</p>
 
         <p class="research">
           My research interests mainly focus on <strong>model editing</strong>,
@@ -209,42 +330,38 @@
         </p>
 
         <div class="links">
-          <a href="https://github.com/XXXia-art" target="_blank">💻 GitHub</a> /
-          <a href="https://scholar.google.com/" target="_blank">📚 Google Scholar</a>
+          <a href="https://github.com/XXXia-art" target="_blank" rel="noreferrer">GitHub</a> /
+          <a href="https://scholar.google.com/" target="_blank" rel="noreferrer">Google Scholar</a>
         </div>
-        
 
-        
-        <!-- 新增：GitHub 和 Huawei 标志 -->
         <div class="badge-row">
-
-          <a href="mailto:pz.xia@qq.com" target="_blank">
+          <a href="mailto:pz.xia@qq.com" target="_blank" rel="noreferrer">
             <img
               src="https://img.shields.io/badge/QQ%20Mail-pz.xia%40qq.com-12B7F5"
               alt="QQ Mail Badge"
             >
           </a>
 
-          <a href="https://github.com/XXXia-art" target="_blank">
+          <a href="https://github.com/XXXia-art" target="_blank" rel="noreferrer">
             <img
               src="https://img.shields.io/badge/GitHub-XXXia--art-181717?logo=github&logoColor=white"
               alt="GitHub Badge"
             >
           </a>
 
-            <img
-              src="https://img.shields.io/badge/Intern-Huawei-C7000B?logo=huawei&logoColor=white"
-              alt="Huawei Internship Badge"
-            >
-            <img
-              src="https://img.shields.io/badge/%F0%9F%87%A8%F0%9F%87%B3-China-red"
-              alt="China Badge"
-            >
+          <img
+            src="https://img.shields.io/badge/Intern-Huawei-C7000B?logo=huawei&logoColor=white"
+            alt="Huawei Internship Badge"
+          >
+          <img
+            src="https://img.shields.io/badge/Country-China-red"
+            alt="China Badge"
+          >
         </div>
       </div>
 
       <div class="photo-box">
-        <img class="profile-photo" src="myself.jpg" alt="Puzhi Xia">
+        <img class="profile-photo" src="assets/myself.jpg" alt="Puzhi Xia">
       </div>
     </div>
 
@@ -253,13 +370,29 @@
       <p>
         I am an undergraduate student at Southeast University. My current work
         focuses on sequential concept editing for diffusion models, especially
-        how to reduce interference with current edits and historical edits
-        while preserving the model's original generation capability.
+        how to reduce interference with current edits and historical edits while
+        preserving the model's original generation capability.
       </p>
       <p>
         More broadly, I am interested in trustworthy generative models and
         efficient model adaptation.
       </p>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Interactive</h2>
+      <div class="interactive-card panel" id="interactive-card">
+        <p class="interactive-kicker">Pretext Playground</p>
+        <h3 class="interactive-heading">Move the bubble and the text will flow around it.</h3>
+        <p class="interactive-note">
+          This module uses Pretext for fast line layout. The bubble acts like a moving
+          obstacle, so the copy is re-typeset in real time and no text appears inside the bubble.
+        </p>
+        <div class="interactive-stage" id="interactive-stage">
+          <div class="interactive-flow" id="interactive-flow" aria-live="polite"></div>
+          <div class="cursor-bubble" id="cursor-bubble" aria-hidden="true"></div>
+        </div>
+      </div>
     </div>
 
     <div class="section">
@@ -276,8 +409,8 @@
       <ul class="project-list">
         <li>
           <strong>Sequential Concept Editing for Stable Diffusion</strong><br>
-          A research project on improving multi-step concept erasure while
-          reducing interference with prior edits and preserving generation quality.
+          A research project on improving multi-step concept erasure while reducing
+          interference with prior edits and preserving generation quality.
         </li>
         <li>
           <strong>Diffusion Model Editing with Historical Subspace Constraints</strong><br>
@@ -287,7 +420,6 @@
       </ul>
     </div>
 
-    <!-- 新增：Experience 模块 -->
     <div class="section">
       <h2 class="section-title">Experience</h2>
       <ul class="exp-list">
@@ -297,8 +429,8 @@
           </div>
           <br>
           <strong>Huawei</strong>, Research Intern<br>
-          Jul. 2025 – Sep. 2025<br>
-          Worked on model editing / generative model related research projects.
+          Jul. 2025 - Sep. 2025<br>
+          Worked on model editing and generative model related research projects.
         </li>
       </ul>
     </div>
@@ -308,7 +440,7 @@
       <ul class="edu-list">
         <li>
           <strong>Southeast University</strong><br>
-          Undergraduate Student, 20XX – Present
+          Undergraduate Student, 20XX - Present
         </li>
       </ul>
     </div>
@@ -316,7 +448,237 @@
     <div class="footer">
       Last updated: April 2026
     </div>
-
   </div>
+
+  <script type="module">
+    const stage = document.getElementById("interactive-stage");
+    const flow = document.getElementById("interactive-flow");
+    const bubble = document.getElementById("cursor-bubble");
+    const card = document.getElementById("interactive-card");
+
+    const interactiveCopy = [
+      "I like building research systems that feel precise, resilient, and understandable.",
+      "That means thinking carefully about how edits accumulate, how constraints interact over time,",
+      "and how a model can remain both steerable and faithful after many rounds of intervention.",
+      "This small experiment turns those ideas into a visual metaphor: a moving bubble creates a local",
+      "constraint, and the text reorganizes itself instantly around that pressure without losing its rhythm."
+    ].join(" ");
+
+    const state = {
+      bubbleX: 0,
+      bubbleY: 0,
+      bubbleRadius: 70,
+      bubblePadding: 24,
+      lineHeight: 32,
+      prepared: null,
+      renderFrame: 0,
+      lastPointer: null
+    };
+
+    const escapeHtml = (value) => value
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;");
+
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+    const bubbleBounds = () => ({
+      left: state.bubbleX - state.bubbleRadius,
+      right: state.bubbleX + state.bubbleRadius,
+      top: state.bubbleY - state.bubbleRadius,
+      bottom: state.bubbleY + state.bubbleRadius
+    });
+
+    const updateBubbleVisual = () => {
+      bubble.style.left = state.bubbleX + "px";
+      bubble.style.top = state.bubbleY + "px";
+    };
+
+    const fallbackRender = () => {
+      flow.innerHTML = '<p class="fallback-copy">' + escapeHtml(interactiveCopy) + "</p>";
+      flow.style.minHeight = "0px";
+      bubble.hidden = true;
+      card.classList.add("is-idle");
+    };
+
+    import("https://esm.sh/@chenglou/pretext@latest").then(async (pretext) => {
+      const {
+        prepareWithSegments,
+        layoutNextLineRange,
+        materializeLineRange
+      } = pretext;
+
+      const updatePrepared = () => {
+        const style = getComputedStyle(flow);
+        const lineHeight = Number.parseFloat(style.lineHeight);
+        state.lineHeight = Number.isFinite(lineHeight) ? lineHeight : 32;
+        state.prepared = prepareWithSegments(interactiveCopy, style.font);
+      };
+
+      const consumeSegment = (cursor, width) => {
+        if (width <= 0) {
+          return null;
+        }
+
+        const range = layoutNextLineRange(state.prepared, cursor, width);
+        if (!range) {
+          return null;
+        }
+
+        const line = materializeLineRange(state.prepared, range);
+        return { cursor: range.end, line };
+      };
+
+      const render = () => {
+        state.renderFrame = 0;
+
+        if (!state.prepared) {
+          return;
+        }
+
+        const width = flow.clientWidth;
+        if (!width) {
+          return;
+        }
+
+        const segments = [];
+        let cursor = { segmentIndex: 0, graphemeIndex: 0 };
+        let y = 0;
+        let guard = 0;
+
+        while (guard < 4000) {
+          guard += 1;
+          const obstacle = bubbleBounds();
+          const paddedTop = obstacle.top - state.bubblePadding;
+          const paddedBottom = obstacle.bottom + state.bubblePadding;
+          const intersectsObstacle = y + state.lineHeight > paddedTop && y < paddedBottom;
+
+          if (!intersectsObstacle) {
+            const piece = consumeSegment(cursor, width);
+            if (!piece) {
+              break;
+            }
+
+            segments.push({
+              text: piece.line.text,
+              x: 0,
+              y,
+              width
+            });
+
+            cursor = piece.cursor;
+            y += state.lineHeight;
+            continue;
+          }
+
+          const leftWidth = Math.max(0, obstacle.left - state.bubblePadding);
+          const rightX = Math.min(width, obstacle.right + state.bubblePadding);
+          const rightWidth = Math.max(0, width - rightX);
+          let moved = false;
+
+          if (leftWidth > 44) {
+            const leftPiece = consumeSegment(cursor, leftWidth);
+            if (leftPiece && leftPiece.line.text) {
+              segments.push({
+                text: leftPiece.line.text,
+                x: 0,
+                y,
+                width: leftWidth
+              });
+              cursor = leftPiece.cursor;
+              moved = true;
+            }
+          }
+
+          if (rightWidth > 44) {
+            const rightPiece = consumeSegment(cursor, rightWidth);
+            if (rightPiece && rightPiece.line.text) {
+              segments.push({
+                text: rightPiece.line.text,
+                x: rightX,
+                y,
+                width: rightWidth
+              });
+              cursor = rightPiece.cursor;
+              moved = true;
+            }
+          }
+
+          if (!moved) {
+            y = paddedBottom + state.lineHeight * 0.2;
+            continue;
+          }
+
+          y += state.lineHeight;
+        }
+
+        flow.style.height = Math.max(y + 8, 260) + "px";
+        flow.innerHTML = segments.map((segment) => (
+          '<span class="flow-fragment" style="max-width:' + segment.width + 'px;transform:translate(' +
+          segment.x + 'px,' + segment.y + 'px)">' +
+          escapeHtml(segment.text) +
+          "</span>"
+        )).join("");
+      };
+
+      const queueRender = () => {
+        if (state.renderFrame) {
+          return;
+        }
+
+        state.renderFrame = requestAnimationFrame(render);
+      };
+
+      const positionBubble = (clientX, clientY) => {
+        const rect = stage.getBoundingClientRect();
+        const radius = window.innerWidth <= 768 ? 55 : 70;
+        state.bubbleRadius = radius;
+        state.bubbleX = clamp(clientX - rect.left, radius, rect.width - radius);
+        state.bubbleY = clamp(clientY - rect.top, radius, Math.max(radius, rect.height - radius));
+        updateBubbleVisual();
+        queueRender();
+      };
+
+      const idlePosition = () => {
+        const rect = stage.getBoundingClientRect();
+        const radius = window.innerWidth <= 768 ? 55 : 70;
+        state.bubbleRadius = radius;
+        state.bubbleX = rect.width * 0.72;
+        state.bubbleY = Math.min(rect.height * 0.34, rect.height - radius);
+        updateBubbleVisual();
+      };
+
+      stage.addEventListener("pointermove", (event) => {
+        card.classList.remove("is-idle");
+        state.lastPointer = { x: event.clientX, y: event.clientY };
+        positionBubble(event.clientX, event.clientY);
+      });
+
+      stage.addEventListener("pointerleave", () => {
+        card.classList.add("is-idle");
+        idlePosition();
+        queueRender();
+      });
+
+      const resizeObserver = new ResizeObserver(() => {
+        updatePrepared();
+        if (state.lastPointer) {
+          positionBubble(state.lastPointer.x, state.lastPointer.y);
+        } else {
+          idlePosition();
+          queueRender();
+        }
+      });
+
+      resizeObserver.observe(stage);
+
+      await document.fonts.ready;
+      updatePrepared();
+      idlePosition();
+      queueRender();
+    }).catch(() => {
+      fallbackRender();
+    });
+  </script>
 </body>
 </html>
