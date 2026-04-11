@@ -1,4 +1,4 @@
-﻿# Resume Template
+# Resume Template
 
 Simple academic homepage template with separated content, styles, and interactive behavior.
 
@@ -15,3 +15,4 @@ Simple academic homepage template with separated content, styles, and interactiv
 
 - The interests section currently uses remote images for *The Shawshank Redemption* poster and Gabriel Garcia Marquez.
 - If you open-source or redistribute the site, review the media licenses and replace the remote assets if needed.
+
