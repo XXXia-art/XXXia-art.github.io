@@ -39,7 +39,8 @@ export async function initPoemPanel({ root, lines }) {
       preparedLines: [],
       lineHeight: 30,
       animationFrame: 0,
-      wheelLocked: false
+      wheelVelocity: 0,
+      settleTimer: 0
     };
 
     const prepareAll = () => {
@@ -66,7 +67,7 @@ export async function initPoemPanel({ root, lines }) {
         return;
       }
 
-      state.visualIndex += delta * 0.18;
+      state.visualIndex += delta * 0.14;
       queueRender();
       state.animationFrame = requestAnimationFrame(animate);
     };
@@ -143,7 +144,7 @@ export async function initPoemPanel({ root, lines }) {
         const relative = layout.index - state.visualIndex;
         const distance = Math.abs(relative);
         const isFocused = distance < 0.22;
-        const opacity = isFocused ? 1 : Math.max(0.04, 0.52 - distance * 0.18);
+        const opacity = isFocused ? 1 : Math.max(0.08, 0.62 - distance * 0.18);
         const blur = isFocused ? 0 : Math.min(9, distance * 2.2);
         const scale = isFocused ? 1 : Math.max(0.9, 1 - distance * 0.03);
         const weight = isFocused ? 760 : distance < 1 ? 560 : 420;
@@ -174,15 +175,24 @@ export async function initPoemPanel({ root, lines }) {
 
     viewport.addEventListener("wheel", (event) => {
       event.preventDefault();
-      if (state.wheelLocked) {
-        return;
+      const direction = event.deltaY > 0 ? 1 : -1;
+      const intensity = Math.min(1.35, Math.max(0.45, Math.abs(event.deltaY) / 95));
+      state.wheelVelocity += direction * intensity;
+      const delta = Math.trunc(state.wheelVelocity);
+      if (delta !== 0) {
+        state.wheelVelocity -= delta;
+        moveBy(delta);
       }
 
-      state.wheelLocked = true;
-      moveBy(event.deltaY > 0 ? 1 : -1);
-      window.setTimeout(() => {
-        state.wheelLocked = false;
-      }, 220);
+      window.clearTimeout(state.settleTimer);
+      state.settleTimer = window.setTimeout(() => {
+        const snapped = Math.round(state.targetIndex);
+        if (snapped !== state.targetIndex) {
+          state.targetIndex = snapped;
+          ensureAnimation();
+        }
+        state.wheelVelocity = 0;
+      }, 160);
     }, { passive: false });
 
     const resizeObserver = new ResizeObserver(() => {
@@ -195,7 +205,7 @@ export async function initPoemPanel({ root, lines }) {
     prepareAll();
     state.visualIndex = 0;
     state.targetIndex = 0;
-    state.wheelLocked = false;
+    state.wheelVelocity = 0;
     queueRender();
   } catch {
     fallbackRender();

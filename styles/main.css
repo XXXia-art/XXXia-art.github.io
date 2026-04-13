@@ -143,7 +143,7 @@ img {
 }
 
 .poem-title {
-  font-size: 30px;
+  font-size: 36px;
   font-weight: 700;
   line-height: 1.2;
   color: rgba(27, 35, 48, 0.82);
@@ -465,7 +465,7 @@ li {
   }
 
   .poem-title {
-    font-size: 24px;
+    font-size: 28px;
   }
 
   .poem-author {
