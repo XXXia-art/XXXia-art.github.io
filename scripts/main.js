@@ -19,13 +19,13 @@ const createBadgeMarkup = ({ href, src, alt }) => {
 const renderPoemSidebar = (poemPanel) => {
   appPoemSidebar.innerHTML = `
     <div class="poem-shell">
-      <div class="poem-viewport" data-poem-viewport>
-        <div class="poem-flow" data-poem-flow></div>
-      </div>
-      <div class="poem-meta">
+      <div class="poem-meta poem-meta-top">
         <p class="poem-title">${poemPanel.title}</p>
         <p class="poem-author">${poemPanel.author}</p>
         <a href="${poemPanel.sourceHref}" target="_blank" rel="noreferrer">${poemPanel.sourceLabel}</a>
+      </div>
+      <div class="poem-viewport" data-poem-viewport>
+        <div class="poem-flow" data-poem-flow></div>
       </div>
     </div>
   `;
