@@ -39,7 +39,7 @@ export async function initPoemPanel({ root, lines }) {
       preparedLines: [],
       lineHeight: 30,
       animationFrame: 0,
-      wheelBuffer: 0
+      wheelLocked: false
     };
 
     const prepareAll = () => {
@@ -143,7 +143,7 @@ export async function initPoemPanel({ root, lines }) {
         const relative = layout.index - state.visualIndex;
         const distance = Math.abs(relative);
         const isFocused = distance < 0.22;
-        const opacity = isFocused ? 1 : Math.max(0.08, 0.74 - distance * 0.24);
+        const opacity = isFocused ? 1 : Math.max(0.04, 0.52 - distance * 0.18);
         const blur = isFocused ? 0 : Math.min(9, distance * 2.2);
         const scale = isFocused ? 1 : Math.max(0.9, 1 - distance * 0.03);
         const weight = isFocused ? 760 : distance < 1 ? 560 : 420;
@@ -174,15 +174,15 @@ export async function initPoemPanel({ root, lines }) {
 
     viewport.addEventListener("wheel", (event) => {
       event.preventDefault();
-      state.wheelBuffer += event.deltaY;
-      const threshold = 54;
-      if (Math.abs(state.wheelBuffer) < threshold) {
+      if (state.wheelLocked) {
         return;
       }
 
-      const steps = Math.trunc(state.wheelBuffer / threshold);
-      state.wheelBuffer -= steps * threshold;
-      moveBy(steps);
+      state.wheelLocked = true;
+      moveBy(event.deltaY > 0 ? 1 : -1);
+      window.setTimeout(() => {
+        state.wheelLocked = false;
+      }, 220);
     }, { passive: false });
 
     const resizeObserver = new ResizeObserver(() => {
@@ -195,7 +195,7 @@ export async function initPoemPanel({ root, lines }) {
     prepareAll();
     state.visualIndex = 0;
     state.targetIndex = 0;
-    state.wheelBuffer = 0;
+    state.wheelLocked = false;
     queueRender();
   } catch {
     fallbackRender();
