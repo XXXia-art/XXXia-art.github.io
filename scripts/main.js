@@ -19,17 +19,8 @@ const createBadgeMarkup = ({ href, src, alt }) => {
 const renderPoemSidebar = (poemPanel) => {
   appPoemSidebar.innerHTML = `
     <div class="poem-shell">
-      <div class="poem-card">
-        <div class="poem-browser">
-          <span></span>
-          <span></span>
-          <span></span>
-          <p>${poemPanel.intro}</p>
-        </div>
-        <div class="poem-screen">
-          <div class="poem-screen-glow"></div>
-          <div class="poem-screen-inner" data-poem-flow></div>
-        </div>
+      <div class="poem-viewport" data-poem-viewport>
+        <div class="poem-flow" data-poem-flow></div>
       </div>
       <div class="poem-meta">
         <p class="poem-title">${poemPanel.title}</p>
@@ -184,5 +175,5 @@ if (interactiveSection) {
 
 initPoemPanel({
   root: appPoemSidebar,
-  stanzas: siteContent.poemPanel.stanzas
+  lines: siteContent.poemPanel.lines
 });
