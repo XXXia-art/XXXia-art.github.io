@@ -7,6 +7,9 @@
   --section-gap: 40px;
   --shadow-soft: 0 18px 44px rgba(83, 63, 27, 0.08);
   --border-soft: rgba(145, 118, 74, 0.16);
+  --main-width: 920px;
+  --sidebar-gap: clamp(18px, 2.4vw, 42px);
+  --sidebar-width: clamp(190px, calc((100vw - var(--main-width)) / 2 - var(--sidebar-gap) - 28px), 420px);
 }
 
 * {
@@ -23,6 +26,7 @@ body {
     radial-gradient(circle at top left, rgba(214, 171, 96, 0.18), transparent 32%),
     radial-gradient(circle at bottom right, rgba(130, 167, 215, 0.2), transparent 28%),
     var(--bg-color);
+  overflow-x: clip;
 }
 
 a {
@@ -48,15 +52,15 @@ img {
 .page-shell {
   position: relative;
   width: 100%;
-  max-width: 920px;
+  max-width: var(--main-width);
   margin: 0 auto;
 }
 
 .sidebar {
   position: absolute;
   top: 0;
-  right: calc(100% + 42px);
-  width: 420px;
+  right: calc(100% + var(--sidebar-gap));
+  width: var(--sidebar-width);
 }
 
 .content-column {
@@ -100,8 +104,8 @@ img {
   min-height: 900px;
   padding-right: 0;
   font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
-  font-size: 30px;
-  line-height: 1.24;
+  font-size: clamp(24px, calc(var(--sidebar-width) * 0.074), 30px);
+  line-height: 1.38;
   letter-spacing: 0.01em;
   color: rgba(32, 41, 58, 0.28);
 }
@@ -143,7 +147,7 @@ img {
 }
 
 .poem-title {
-  font-size: 36px;
+  font-size: clamp(28px, calc(var(--sidebar-width) * 0.088), 36px);
   font-weight: 700;
   line-height: 1.2;
   color: rgba(27, 35, 48, 0.82);
@@ -152,7 +156,7 @@ img {
 .poem-author {
   margin-top: 4px;
   margin-bottom: 10px;
-  font-size: 20px;
+  font-size: clamp(17px, calc(var(--sidebar-width) * 0.048), 20px);
   color: rgba(107, 114, 128, 0.66);
 }
 
@@ -348,9 +352,6 @@ li {
 .interactive-controls {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
   padding: 12px 14px;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.72);
@@ -358,27 +359,12 @@ li {
   margin-bottom: 18px;
 }
 
-.interactive-controls label {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.interactive-instruction {
+  margin: 0;
   color: #364152;
   font-size: 14px;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-}
-
-.interactive-controls input[type="range"] {
-  width: min(360px, 52vw);
-  accent-color: #111827;
-}
-
-.rotation-value {
-  min-width: 54px;
-  text-align: right;
-  font-size: 15px;
-  font-variant-numeric: tabular-nums;
-  color: #111827;
 }
 
 .interactive-stage {
@@ -386,6 +372,7 @@ li {
   min-height: 430px;
   padding: 10px 0 0;
   overflow: hidden;
+  cursor: none;
 }
 
 .interactive-flow {
@@ -409,10 +396,10 @@ li {
 
 .icon-wrap {
   position: absolute;
-  left: 18px;
-  top: 28px;
-  width: 280px;
-  height: 280px;
+  left: 0;
+  top: 0;
+  width: 238px;
+  height: 214px;
   display: grid;
   place-items: center;
   pointer-events: none;
@@ -424,8 +411,11 @@ li {
   height: 100%;
   object-fit: contain;
   filter: drop-shadow(0 14px 26px rgba(17, 24, 39, 0.1));
-  transform-origin: center;
-  transition: transform 220ms ease;
+  color: rgba(17, 24, 39, 0.94);
+}
+
+.interactive-root-icon text {
+  fill: currentColor;
 }
 
 .fallback-copy {
@@ -440,11 +430,7 @@ li {
   font-size: 14px;
 }
 
-@media (max-width: 768px) {
-  .container {
-    padding: 28px 16px 56px;
-  }
-
+@media (max-width: 1180px) {
   .page-shell {
     max-width: none;
   }
@@ -453,6 +439,33 @@ li {
     position: static;
     width: auto;
     margin-bottom: 24px;
+  }
+
+  .poem-viewport {
+    min-height: 620px;
+  }
+
+  .poem-flow {
+    min-height: 620px;
+    font-size: 24px;
+  }
+
+  .poem-title {
+    font-size: 32px;
+  }
+
+  .poem-author {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 28px 16px 56px;
+  }
+
+  .page-shell {
+    max-width: none;
   }
 
   .poem-viewport {
@@ -510,24 +523,13 @@ li {
     align-items: flex-start;
   }
 
-  .interactive-controls label {
-    width: 100%;
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .interactive-controls input[type="range"] {
-    width: 100%;
-  }
-
   .interactive-stage {
     min-height: 560px;
+    cursor: auto;
   }
 
   .icon-wrap {
-    width: 220px;
-    height: 220px;
-    left: 8px;
-    top: 58px;
+    width: 200px;
+    height: 180px;
   }
 }

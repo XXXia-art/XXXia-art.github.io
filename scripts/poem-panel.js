@@ -46,7 +46,7 @@ export async function initPoemPanel({ root, lines }) {
     const prepareAll = () => {
       const style = getComputedStyle(flow);
       const lineHeight = Number.parseFloat(style.lineHeight);
-      state.lineHeight = Number.isFinite(lineHeight) ? lineHeight : 20;
+      state.lineHeight = Number.isFinite(lineHeight) ? lineHeight + 4 : 24;
       state.preparedLines = lines.map((line) => prepareWithSegments(line, style.font));
     };
 
