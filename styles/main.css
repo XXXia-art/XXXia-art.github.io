@@ -52,14 +52,14 @@ img {
 
 .page-shell {
   display: grid;
-  grid-template-columns: 390px minmax(0, 1fr);
-  gap: 28px;
+  grid-template-columns: 470px minmax(0, 1fr);
+  gap: 18px;
   align-items: start;
 }
 
 .sidebar {
   position: sticky;
-  top: 24px;
+  top: 8px;
   align-self: start;
 }
 
@@ -85,24 +85,24 @@ img {
 }
 
 .poem-shell {
-  padding-top: 8px;
+  padding-top: 0;
 }
 
 .poem-viewport {
   position: relative;
-  min-height: 760px;
+  min-height: 900px;
   overflow: hidden;
 }
 
 .poem-flow {
   position: relative;
-  min-height: 760px;
-  padding-right: 8px;
+  min-height: 900px;
+  padding-right: 0;
   font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
-  font-size: 22px;
-  line-height: 1.36;
+  font-size: 30px;
+  line-height: 1.24;
   letter-spacing: 0.01em;
-  color: rgba(32, 41, 58, 0.32);
+  color: rgba(32, 41, 58, 0.28);
 }
 
 .poem-block {
@@ -132,7 +132,7 @@ img {
 }
 
 .poem-meta {
-  margin-top: 12px;
+  margin-top: 18px;
   padding-left: 0;
 }
 
@@ -142,7 +142,7 @@ img {
 }
 
 .poem-title {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   color: rgba(27, 35, 48, 0.48);
 }
@@ -452,12 +452,12 @@ li {
   }
 
   .poem-viewport {
-    min-height: 560px;
+    min-height: 620px;
   }
 
   .poem-flow {
-    min-height: 560px;
-    font-size: 18px;
+    min-height: 620px;
+    font-size: 22px;
   }
 
   .header {

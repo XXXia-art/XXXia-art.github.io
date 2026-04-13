@@ -34,12 +34,12 @@ export async function initPoemPanel({ root, lines }) {
 
     const state = {
       renderFrame: 0,
-      activeIndex: 0,
       visualIndex: 0,
       targetIndex: 0,
       preparedLines: [],
       lineHeight: 30,
-      animationFrame: 0
+      animationFrame: 0,
+      wheelBuffer: 0
     };
 
     const prepareAll = () => {
@@ -62,13 +62,11 @@ export async function initPoemPanel({ root, lines }) {
       const delta = state.targetIndex - state.visualIndex;
       if (Math.abs(delta) < 0.001) {
         state.visualIndex = state.targetIndex;
-        state.activeIndex = Math.round(state.targetIndex);
         queueRender();
         return;
       }
 
-      state.visualIndex += delta * 0.16;
-      state.activeIndex = Math.round(state.visualIndex);
+      state.visualIndex += delta * 0.18;
       queueRender();
       state.animationFrame = requestAnimationFrame(animate);
     };
@@ -126,8 +124,8 @@ export async function initPoemPanel({ root, lines }) {
         };
       });
 
-      const gap = state.lineHeight * 1.05;
-      const activeAnchor = Math.max(110, viewport.clientHeight * 0.32);
+      const gap = state.lineHeight * 1.12;
+      const activeAnchor = Math.max(96, viewport.clientHeight * 0.24);
       const pivotIndex = Math.max(0, Math.min(lines.length - 1, Math.round(state.visualIndex)));
       const topPositions = [];
       topPositions[pivotIndex] = activeAnchor - lineLayouts[pivotIndex].height / 2;
@@ -144,13 +142,14 @@ export async function initPoemPanel({ root, lines }) {
       const html = lineLayouts.map((layout) => {
         const relative = layout.index - state.visualIndex;
         const distance = Math.abs(relative);
-        const opacity = Math.max(0.08, 1 - distance * 0.23);
-        const blur = Math.min(10, distance * 2.8);
-        const scale = Math.max(0.88, 1 - distance * 0.035);
-        const weight = distance < 0.45 ? 700 : distance < 1.2 ? 560 : 420;
+        const isFocused = distance < 0.22;
+        const opacity = isFocused ? 1 : Math.max(0.08, 0.74 - distance * 0.24);
+        const blur = isFocused ? 0 : Math.min(9, distance * 2.2);
+        const scale = isFocused ? 1 : Math.max(0.9, 1 - distance * 0.03);
+        const weight = isFocused ? 760 : distance < 1 ? 560 : 420;
         return `
           <div
-            class="poem-block${distance < 0.45 ? " is-active" : ""}"
+            class="poem-block${isFocused ? " is-active" : ""}"
             style="height:${layout.height}px;transform:translateY(${topPositions[layout.index] - visualOffset}px) scale(${scale});opacity:${opacity};filter:blur(${blur}px);font-weight:${weight}"
           >
             ${layout.fragments.map((fragment) => (
@@ -175,9 +174,15 @@ export async function initPoemPanel({ root, lines }) {
 
     viewport.addEventListener("wheel", (event) => {
       event.preventDefault();
-      const strength = Math.abs(event.deltaY);
-      const delta = strength > 80 ? 1.35 : 0.82;
-      moveBy(event.deltaY > 0 ? delta : -delta);
+      state.wheelBuffer += event.deltaY;
+      const threshold = 54;
+      if (Math.abs(state.wheelBuffer) < threshold) {
+        return;
+      }
+
+      const steps = Math.trunc(state.wheelBuffer / threshold);
+      state.wheelBuffer -= steps * threshold;
+      moveBy(steps);
     }, { passive: false });
 
     const resizeObserver = new ResizeObserver(() => {
@@ -190,6 +195,7 @@ export async function initPoemPanel({ root, lines }) {
     prepareAll();
     state.visualIndex = 0;
     state.targetIndex = 0;
+    state.wheelBuffer = 0;
     queueRender();
   } catch {
     fallbackRender();
