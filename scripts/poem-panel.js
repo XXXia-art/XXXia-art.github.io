@@ -35,8 +35,11 @@ export async function initPoemPanel({ root, lines }) {
     const state = {
       renderFrame: 0,
       activeIndex: 0,
+      visualIndex: 0,
+      targetIndex: 0,
       preparedLines: [],
-      lineHeight: 22
+      lineHeight: 30,
+      animationFrame: 0
     };
 
     const prepareAll = () => {
@@ -52,6 +55,30 @@ export async function initPoemPanel({ root, lines }) {
       }
 
       state.renderFrame = requestAnimationFrame(render);
+    };
+
+    const animate = () => {
+      state.animationFrame = 0;
+      const delta = state.targetIndex - state.visualIndex;
+      if (Math.abs(delta) < 0.001) {
+        state.visualIndex = state.targetIndex;
+        state.activeIndex = Math.round(state.targetIndex);
+        queueRender();
+        return;
+      }
+
+      state.visualIndex += delta * 0.16;
+      state.activeIndex = Math.round(state.visualIndex);
+      queueRender();
+      state.animationFrame = requestAnimationFrame(animate);
+    };
+
+    const ensureAnimation = () => {
+      if (state.animationFrame) {
+        return;
+      }
+
+      state.animationFrame = requestAnimationFrame(animate);
     };
 
     const render = () => {
@@ -99,27 +126,32 @@ export async function initPoemPanel({ root, lines }) {
         };
       });
 
-      const gap = state.lineHeight * 0.95;
-      const centerY = viewport.clientHeight * 0.42;
+      const gap = state.lineHeight * 1.05;
+      const activeAnchor = Math.max(110, viewport.clientHeight * 0.32);
+      const pivotIndex = Math.max(0, Math.min(lines.length - 1, Math.round(state.visualIndex)));
       const topPositions = [];
-      topPositions[state.activeIndex] = centerY - lineLayouts[state.activeIndex].height / 2;
+      topPositions[pivotIndex] = activeAnchor - lineLayouts[pivotIndex].height / 2;
 
-      for (let index = state.activeIndex - 1; index >= 0; index -= 1) {
+      for (let index = pivotIndex - 1; index >= 0; index -= 1) {
         topPositions[index] = topPositions[index + 1] - lineLayouts[index].height - gap;
       }
 
-      for (let index = state.activeIndex + 1; index < lineLayouts.length; index += 1) {
+      for (let index = pivotIndex + 1; index < lineLayouts.length; index += 1) {
         topPositions[index] = topPositions[index - 1] + lineLayouts[index - 1].height + gap;
       }
 
+      const visualOffset = (state.visualIndex - pivotIndex) * (state.lineHeight + gap);
       const html = lineLayouts.map((layout) => {
-        const distance = Math.abs(layout.index - state.activeIndex);
-        const opacity = layout.index === state.activeIndex ? 1 : Math.max(0.12, 0.46 - distance * 0.08);
-        const scale = layout.index === state.activeIndex ? 1 : Math.max(0.9, 0.97 - distance * 0.02);
+        const relative = layout.index - state.visualIndex;
+        const distance = Math.abs(relative);
+        const opacity = Math.max(0.08, 1 - distance * 0.23);
+        const blur = Math.min(10, distance * 2.8);
+        const scale = Math.max(0.88, 1 - distance * 0.035);
+        const weight = distance < 0.45 ? 700 : distance < 1.2 ? 560 : 420;
         return `
           <div
-            class="poem-block${layout.index === state.activeIndex ? " is-active" : ""}"
-            style="height:${layout.height}px;transform:translateY(${topPositions[layout.index]}px) scale(${scale});opacity:${opacity}"
+            class="poem-block${distance < 0.45 ? " is-active" : ""}"
+            style="height:${layout.height}px;transform:translateY(${topPositions[layout.index] - visualOffset}px) scale(${scale});opacity:${opacity};filter:blur(${blur}px);font-weight:${weight}"
           >
             ${layout.fragments.map((fragment) => (
               `<span class="poem-fragment" style="max-width:${fragment.width}px;transform:translate(0px,${fragment.y}px)">${escapeHtml(fragment.text)}</span>`
@@ -131,28 +163,21 @@ export async function initPoemPanel({ root, lines }) {
       flow.innerHTML = html;
     };
 
-    const advance = (direction) => {
-      const nextIndex = Math.min(lines.length - 1, Math.max(0, state.activeIndex + direction));
-      if (nextIndex === state.activeIndex) {
+    const moveBy = (delta) => {
+      const nextIndex = Math.min(lines.length - 1, Math.max(0, state.targetIndex + delta));
+      if (nextIndex === state.targetIndex) {
         return;
       }
 
-      state.activeIndex = nextIndex;
-      queueRender();
+      state.targetIndex = nextIndex;
+      ensureAnimation();
     };
 
-    let wheelLock = false;
     viewport.addEventListener("wheel", (event) => {
       event.preventDefault();
-      if (wheelLock) {
-        return;
-      }
-
-      wheelLock = true;
-      advance(event.deltaY > 0 ? 1 : -1);
-      window.setTimeout(() => {
-        wheelLock = false;
-      }, 85);
+      const strength = Math.abs(event.deltaY);
+      const delta = strength > 80 ? 1.35 : 0.82;
+      moveBy(event.deltaY > 0 ? delta : -delta);
     }, { passive: false });
 
     const resizeObserver = new ResizeObserver(() => {
@@ -163,6 +188,8 @@ export async function initPoemPanel({ root, lines }) {
     resizeObserver.observe(flow);
     await document.fonts.ready;
     prepareAll();
+    state.visualIndex = 0;
+    state.targetIndex = 0;
     queueRender();
   } catch {
     fallbackRender();
