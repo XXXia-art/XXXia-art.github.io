@@ -1,6 +1,8 @@
 import { siteContent } from "../data/site-content.js";
 import { initInteractive } from "./interactive.js";
+import { initPoemPanel } from "./poem-panel.js";
 
+const appPoemSidebar = document.getElementById("poem-sidebar");
 const appHeader = document.getElementById("site-header");
 const appMain = document.getElementById("site-main");
 const appFooter = document.getElementById("site-footer");
@@ -12,6 +14,30 @@ const createLinkMarkup = ({ href, label }) => (
 const createBadgeMarkup = ({ href, src, alt }) => {
   const image = `<img src="${src}" alt="${alt}">`;
   return href ? `<a href="${href}" target="_blank" rel="noreferrer">${image}</a>` : image;
+};
+
+const renderPoemSidebar = (poemPanel) => {
+  appPoemSidebar.innerHTML = `
+    <div class="poem-shell">
+      <div class="poem-card">
+        <div class="poem-browser">
+          <span></span>
+          <span></span>
+          <span></span>
+          <p>${poemPanel.intro}</p>
+        </div>
+        <div class="poem-screen">
+          <div class="poem-screen-glow"></div>
+          <div class="poem-screen-inner" data-poem-flow></div>
+        </div>
+      </div>
+      <div class="poem-meta">
+        <p class="poem-title">${poemPanel.title}</p>
+        <p class="poem-author">${poemPanel.author}</p>
+        <a href="${poemPanel.sourceHref}" target="_blank" rel="noreferrer">${poemPanel.sourceLabel}</a>
+      </div>
+    </div>
+  `;
 };
 
 const renderHeader = (header) => {
@@ -137,6 +163,7 @@ const renderFooter = (footer) => {
   appFooter.textContent = `Last updated: ${footer.updated}`;
 };
 
+renderPoemSidebar(siteContent.poemPanel);
 renderHeader(siteContent.header);
 renderSections(siteContent.sections);
 renderFooter(siteContent.footer);
@@ -154,3 +181,8 @@ if (interactiveSection) {
     copy: interactiveSection.interactiveCopy
   });
 }
+
+initPoemPanel({
+  root: appPoemSidebar,
+  stanzas: siteContent.poemPanel.stanzas
+});

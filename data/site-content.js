@@ -1,4 +1,38 @@
-export const siteContent = {
+﻿export const siteContent = {
+  poemPanel: {
+    title: "孤独的根号三",
+    author: "大卫·范伯格",
+    sourceLabel: "PoemWiki",
+    sourceHref: "https://poemwiki.org/p/MTM3ODkwOTA5MDg5ODM4",
+    intro: "A narrow reading mode composed with Pretext.",
+    stanzas: [
+      [
+        "我怕我永远是一个孤独的数字",
+        "像那根号三",
+        "完整的三很好啊",
+        "为什么我的三得呆在那堕落的根号之下？",
+        "我希望它是个九",
+        "因为九可以迅速算出来",
+        "并摆脱根号邪恶的诡计",
+        "我知道 我不会再看见太阳了",
+        "像那一点七三二",
+        "这是我的现实",
+        "一个悲伤的无理数"
+      ],
+      [
+        "何时，听呐，我看到的这是什么",
+        "又一个根号三",
+        "静静地 踏着华尔兹舞步而来",
+        "现在 我们在一起",
+        "构成了我们所喜欢的那数字",
+        "并因那完整而欣喜不已",
+        "我们冲破命中注定的束缚",
+        "挥了挥魔杖",
+        "摆脱了那根号",
+        "于是 爱便复燃了"
+      ]
+    ]
+  },
   header: {
     name: "Puzhi Xia",
     subtitle: "Junior Student, Southeast University",
@@ -45,6 +79,26 @@ export const siteContent = {
         { date: "2026.03", text: "Working on sequential editing methods for diffusion models." },
         { date: "2026.02", text: "Exploring how to combine SPEED, AlphaEdit, and DeltaEdit ideas." }
       ]
+    },
+    {
+      id: "interactive",
+      title: "Interactive",
+      type: "interactive",
+      kicker: "Pretext Playground",
+      heading: "Rotate the mark and let the article recompose around it.",
+      note:
+        "The large ChatGPT-style mark now sits closer to the article body, so the wrap reacts more obviously as the silhouette turns.",
+      controlLabel: "Rotate Mark",
+      interactiveCopy: [
+        "Situational awareness in research comes from more than one result looking good at the end of a run.",
+        "It comes from noticing how edits accumulate, how constraints interact, and how a system behaves when the same idea is revisited under slightly different pressure.",
+        "That is why I care about model editing as both an optimization problem and a design problem: each new intervention leaves a trace, and those traces change what is possible next.",
+        "The composition here turns that intuition into a small editorial study.",
+        "A large mark sits close to the opening lines like a printed emblem on the page.",
+        "As the mark rotates, the available measure on every line shifts, and the paragraph reorganizes itself around the new silhouette.",
+        "Nothing is dragged by hand and no line breaks are hard-coded.",
+        "The text is measured again, laid out again, and allowed to find a new rhythm that still feels intentional."
+      ].join(" ")
     },
     {
       id: "projects",
@@ -110,26 +164,6 @@ export const siteContent = {
           creditHref: "https://commons.wikimedia.org/wiki/File:Gabriel_Garcia_Marquez.jpg"
         }
       ]
-    },
-    {
-      id: "interactive",
-      title: "Interactive",
-      type: "interactive",
-      kicker: "Pretext Playground",
-      heading: "Rotate the mark and let the article recompose around it.",
-      note:
-        "The large ChatGPT-style mark stays fixed like an editorial illustration. When you rotate it, Pretext recalculates the wrapped text so the paragraph structure changes with the silhouette.",
-      controlLabel: "Rotate Mark",
-      interactiveCopy: [
-        "Situational awareness in research comes from more than one result looking good at the end of a run.",
-        "It comes from noticing how edits accumulate, how constraints interact, and how a system behaves when the same idea is revisited under slightly different pressure.",
-        "That is why I care about model editing as both an optimization problem and a design problem: each new intervention leaves a trace, and those traces change what is possible next.",
-        "The composition here turns that intuition into a small editorial study.",
-        "A large mark sits inside the article like a fixed object on a printed page.",
-        "As the mark rotates, the available measure on every line shifts, and the paragraph reorganizes itself around the new silhouette.",
-        "Nothing is dragged by hand and no line breaks are hard-coded.",
-        "The text is measured again, laid out again, and allowed to find a new rhythm that still feels intentional."
-      ].join(" ")
     }
   ],
   footer: {

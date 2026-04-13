@@ -18,7 +18,7 @@ export async function initInteractive({
 
   const state = {
     rotationDeg: Number.parseFloat(rotationControl.value) || 0,
-    obstaclePadding: 14,
+    obstaclePadding: 10,
     lineHeight: 29,
     rowBounds: [],
     prepared: null,
@@ -57,8 +57,8 @@ export async function initInteractive({
     };
 
     const buildRowBounds = () => {
-      const orbit = 0.23;
-      const radius = 0.19;
+      const orbit = 0.235;
+      const radius = 0.205;
       const metrics = iconMetrics();
       const size = metrics.size;
       const center = size / 2;

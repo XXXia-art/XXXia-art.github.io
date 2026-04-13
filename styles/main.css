@@ -46,6 +46,27 @@ img {
   padding: 48px 24px 72px;
 }
 
+#app {
+  max-width: 1320px;
+}
+
+.page-shell {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.sidebar {
+  position: sticky;
+  top: 24px;
+  align-self: start;
+}
+
+.content-column {
+  min-width: 0;
+}
+
 .panel {
   background: var(--card-color);
   border: 1px solid var(--border-soft);
@@ -61,6 +82,120 @@ img {
   gap: 36px;
   padding: 32px;
   margin-bottom: 20px;
+}
+
+.poem-shell {
+  padding-top: 8px;
+}
+
+.poem-card {
+  width: 100%;
+  max-width: 290px;
+  padding: 14px 12px 16px;
+  border-radius: 34px;
+  background: linear-gradient(145deg, #f6dcc8, #f2bf9c 52%, #ecc19d);
+  box-shadow:
+    0 24px 50px rgba(105, 69, 23, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transform: rotate(-8deg);
+}
+
+.poem-browser {
+  display: grid;
+  grid-template-columns: repeat(3, 8px) 1fr;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px 12px;
+}
+
+.poem-browser span {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(70, 45, 29, 0.2);
+}
+
+.poem-browser p {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.03em;
+  color: rgba(67, 43, 27, 0.76);
+  text-align: right;
+}
+
+.poem-screen {
+  position: relative;
+  overflow: hidden;
+  min-height: 560px;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top, rgba(154, 117, 255, 0.1), transparent 28%),
+    linear-gradient(180deg, #101013, #09090b 56%, #121214);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.poem-screen-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(145deg, rgba(173, 133, 255, 0.12), transparent 26%),
+    radial-gradient(circle at bottom, rgba(255, 255, 255, 0.03), transparent 38%);
+  pointer-events: none;
+}
+
+.poem-screen-inner {
+  position: relative;
+  min-height: 560px;
+  padding: 26px 18px 24px;
+  font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+  font-size: 14px;
+  line-height: 1.42;
+  color: rgba(244, 239, 232, 0.94);
+}
+
+.poem-fragment {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-word;
+  will-change: transform;
+}
+
+.poem-stanza + .poem-stanza {
+  margin-top: 18px;
+}
+
+.poem-line {
+  margin: 0 0 6px;
+}
+
+.poem-meta {
+  margin-top: 26px;
+  padding-left: 8px;
+}
+
+.poem-title,
+.poem-author {
+  margin: 0;
+}
+
+.poem-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1b2330;
+}
+
+.poem-author {
+  margin-top: 4px;
+  margin-bottom: 8px;
+  color: var(--muted-color);
+}
+
+.poem-meta a {
+  font-size: 14px;
 }
 
 .intro {
@@ -285,14 +420,14 @@ li {
 
 .interactive-stage {
   position: relative;
-  min-height: 520px;
+  min-height: 430px;
   padding: 10px 0 0;
   overflow: hidden;
 }
 
 .interactive-flow {
   position: relative;
-  min-height: 460px;
+  min-height: 390px;
   font-size: 17px;
   line-height: 1.7;
   color: #1f2a37;
@@ -311,13 +446,14 @@ li {
 
 .icon-wrap {
   position: absolute;
-  left: 18px;
-  bottom: 18px;
-  width: 280px;
-  height: 280px;
+  left: 22px;
+  top: 62px;
+  width: 250px;
+  height: 250px;
   display: grid;
   place-items: center;
   pointer-events: none;
+  z-index: 1;
 }
 
 .interactive-icon {
@@ -344,6 +480,28 @@ li {
 @media (max-width: 768px) {
   .container {
     padding: 28px 16px 56px;
+  }
+
+  .page-shell {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .sidebar {
+    position: static;
+  }
+
+  .poem-card {
+    max-width: none;
+    transform: none;
+  }
+
+  .poem-screen {
+    min-height: 480px;
+  }
+
+  .poem-screen-inner {
+    min-height: 480px;
   }
 
   .header {
@@ -395,13 +553,13 @@ li {
   }
 
   .interactive-stage {
-    min-height: 620px;
+    min-height: 560px;
   }
 
   .icon-wrap {
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 200px;
     left: 8px;
-    bottom: 8px;
+    top: 92px;
   }
 }
