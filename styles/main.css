@@ -27,6 +27,20 @@ body {
     radial-gradient(circle at bottom right, rgba(130, 167, 215, 0.2), transparent 28%),
     var(--bg-color);
   overflow-x: clip;
+  cursor: none;
+}
+
+body a,
+body button,
+body input,
+body textarea,
+body select,
+body summary {
+  cursor: none;
+}
+
+body.hide-global-sqrt-cursor .global-sqrt-cursor {
+  opacity: 0;
 }
 
 a {
@@ -41,6 +55,34 @@ a:hover {
 img {
   display: block;
   max-width: 100%;
+}
+
+.global-sqrt-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 36px;
+  height: 30px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transform: translate(-999px, -999px);
+  transition: opacity 120ms ease, filter 120ms ease;
+  filter: drop-shadow(0 4px 8px rgba(17, 24, 39, 0.08));
+}
+
+.global-sqrt-cursor.is-visible {
+  opacity: 1;
+}
+
+.global-sqrt-cursor.is-pressed {
+  filter: drop-shadow(0 2px 4px rgba(17, 24, 39, 0.06));
+}
+
+.global-sqrt-cursor img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .container {
@@ -318,14 +360,13 @@ li {
 .interactive-card {
   position: relative;
   overflow: hidden;
-  padding: 26px;
-  margin-top: 18px;
-  border-radius: 26px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(248, 243, 233, 0.85)),
-    #fff;
-  border: 1px solid rgba(143, 113, 70, 0.18);
-  box-shadow: 0 18px 38px rgba(99, 73, 28, 0.08);
+  padding: 0;
+  margin-top: 4px;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
 .interactive-kicker {
@@ -352,32 +393,29 @@ li {
 .interactive-controls {
   display: flex;
   align-items: center;
-  padding: 12px 14px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(143, 113, 70, 0.14);
-  margin-bottom: 18px;
+  padding: 0;
+  margin-bottom: 10px;
 }
 
 .interactive-instruction {
   margin: 0;
-  color: #364152;
-  font-size: 14px;
-  letter-spacing: 0.03em;
+  color: rgba(54, 65, 82, 0.66);
+  font-size: 12px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .interactive-stage {
   position: relative;
-  min-height: 430px;
-  padding: 10px 0 0;
+  min-height: 220px;
+  padding: 6px 0 0;
   overflow: hidden;
   cursor: none;
 }
 
 .interactive-flow {
   position: relative;
-  min-height: 390px;
+  min-height: 180px;
   font-size: 17px;
   line-height: 1.7;
   color: #1f2a37;
@@ -398,19 +436,21 @@ li {
   position: absolute;
   left: 0;
   top: 0;
-  width: 238px;
-  height: 214px;
+  width: 60px;
+  height: 49px;
   display: grid;
   place-items: center;
   pointer-events: none;
   z-index: 1;
+  opacity: 0;
+  transition: opacity 120ms ease;
 }
 
 .interactive-icon {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 14px 26px rgba(17, 24, 39, 0.1));
+  filter: drop-shadow(0 6px 12px rgba(17, 24, 39, 0.08));
   color: rgba(17, 24, 39, 0.94);
 }
 
@@ -419,7 +459,7 @@ li {
 }
 
 .fallback-copy {
-  margin: 0;
+  margin: 0 0 12px;
   max-width: 38rem;
 }
 
@@ -431,6 +471,23 @@ li {
 }
 
 @media (max-width: 1180px) {
+  body {
+    cursor: auto;
+  }
+
+  body a,
+  body button,
+  body input,
+  body textarea,
+  body select,
+  body summary {
+    cursor: auto;
+  }
+
+  .global-sqrt-cursor {
+    display: none;
+  }
+
   .page-shell {
     max-width: none;
   }
@@ -524,12 +581,12 @@ li {
   }
 
   .interactive-stage {
-    min-height: 560px;
-    cursor: auto;
+    min-height: 260px;
+    cursor: none;
   }
 
   .icon-wrap {
-    width: 200px;
-    height: 180px;
+    width: 52px;
+    height: 43px;
   }
 }

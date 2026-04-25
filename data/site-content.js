@@ -68,7 +68,13 @@
     {
       id: "news",
       title: "News",
-      type: "timeline",
+      type: "reflow",
+      instruction: "Your cursor becomes sqrt(3) in this section",
+      copy: [
+        "[2026.04] Building my academic homepage on GitHub Pages.",
+        "[2026.03] Working on sequential editing methods for diffusion models.",
+        "[2026.02] Exploring how to combine SPEED, AlphaEdit, and DeltaEdit ideas."
+      ].join(" "),
       items: [
         { date: "2026.04", text: "Building my academic homepage on GitHub Pages." },
         { date: "2026.03", text: "Working on sequential editing methods for diffusion models." },
@@ -76,29 +82,14 @@
       ]
     },
     {
-      id: "interactive",
-      title: "Interactive",
-      type: "interactive",
-      kicker: "Pretext Playground",
-      heading: "Move the square-root mark and let the article recompose around it.",
-      note:
-        "The sqrt(3) mark follows your pointer inside the stage, and the paragraph is remeasured in real time around its changing silhouette.",
-      controlLabel: "Move your mouse inside the card",
-      interactiveCopy: [
-        "Situational awareness in research comes from more than one result looking good at the end of a run.",
-        "It comes from noticing how edits accumulate, how constraints interact, and how a system behaves when the same idea is revisited under slightly different pressure.",
-        "That is why I care about model editing as both an optimization problem and a design problem: each new intervention leaves a trace, and those traces change what is possible next.",
-        "The composition here turns that intuition into a small editorial study.",
-        "A large square-root mark now wanders through the opening lines like a mathematical emblem on the page.",
-        "As the mark moves, the available measure on every line shifts, and the paragraph reorganizes itself around the new silhouette.",
-        "Nothing is dragged line by line and no breaks are hard-coded.",
-        "The text is measured again, laid out again, and allowed to find a new rhythm that still feels intentional."
-      ].join(" ")
-    },
-    {
       id: "projects",
       title: "Projects",
-      type: "list",
+      type: "reflow",
+      instruction: "Your cursor becomes sqrt(3) in this section",
+      copy: [
+        "Sequential Concept Editing for Stable Diffusion. A research project on improving multi-step concept erasure while reducing interference with prior edits and preserving generation quality.",
+        "Diffusion Model Editing with Historical Subspace Constraints. Investigating how to project current updates away from historical edit directions while maintaining effective editing performance."
+      ].join(" "),
       items: [
         {
           title: "Sequential Concept Editing for Stable Diffusion",

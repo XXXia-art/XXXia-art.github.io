@@ -1,4 +1,4 @@
-const escapeHtml = (value) => value
+﻿const escapeHtml = (value) => value
   .replaceAll("&", "&amp;")
   .replaceAll("<", "&lt;")
   .replaceAll(">", "&gt;");
@@ -10,28 +10,29 @@ export async function initInteractive({
   flow,
   iconWrap,
   icon,
-  copy
+  lines
 }) {
-  if (!stage || !flow || !iconWrap || !icon || !copy) {
+  if (!stage || !flow || !iconWrap || !icon || !Array.isArray(lines) || !lines.length) {
     return;
   }
 
   const state = {
     obstaclePadding: 12,
     lineHeight: 29,
-    prepared: null,
+    preparedLines: [],
     renderFrame: 0,
     motionFrame: 0,
     pointerX: 0,
     pointerY: 0,
     currentX: 0,
     currentY: 0,
-    iconWidth: 238,
-    iconHeight: 214
+    iconWidth: 60,
+    iconHeight: 49,
+    active: false
   };
 
   const fallbackRender = () => {
-    flow.innerHTML = `<p class="fallback-copy">${escapeHtml(copy)}</p>`;
+    flow.innerHTML = lines.map((line) => `<p class="fallback-copy">${escapeHtml(line)}</p>`).join("");
     flow.style.minHeight = "0px";
     iconWrap.style.display = "none";
   };
@@ -48,19 +49,19 @@ export async function initInteractive({
       const style = getComputedStyle(flow);
       const lineHeight = Number.parseFloat(style.lineHeight);
       state.lineHeight = Number.isFinite(lineHeight) ? lineHeight : 32;
-      state.prepared = prepareWithSegments(copy, style.font);
+      state.preparedLines = lines.map((line) => prepareWithSegments(line, style.font));
     };
 
     const updateBounds = () => {
       const stageWidth = stage.clientWidth;
       const stageHeight = stage.clientHeight;
-      state.iconWidth = clamp(stageWidth * 0.38, 190, 280);
+      state.iconWidth = clamp(stageWidth * 0.08, 48, 64);
       state.iconHeight = state.iconWidth * 0.82;
 
       const minX = 8;
       const maxX = Math.max(minX, stageWidth - state.iconWidth - 8);
-      const minY = 20;
-      const maxY = Math.max(minY, stageHeight - state.iconHeight - 32);
+      const minY = 18;
+      const maxY = Math.max(minY, stageHeight - state.iconHeight - 24);
 
       state.pointerX = clamp(state.pointerX || stageWidth * 0.16, minX, maxX);
       state.pointerY = clamp(state.pointerY || stageHeight * 0.2, minY, maxY);
@@ -70,6 +71,7 @@ export async function initInteractive({
 
     const positionIcon = () => {
       iconWrap.style.transform = `translate(${state.currentX}px, ${state.currentY}px)`;
+      iconWrap.style.opacity = state.active ? "1" : "0";
     };
 
     const bandBounds = (y, top, height, leftStart, leftEnd, rightStart, rightEnd) => {
@@ -85,6 +87,10 @@ export async function initInteractive({
     };
 
     const obstacleForLine = (lineTop, lineBottom) => {
+      if (!state.active) {
+        return null;
+      }
+
       const left = state.currentX;
       const top = state.currentY;
       const width = state.iconWidth;
@@ -101,10 +107,9 @@ export async function initInteractive({
       const threeHeight = height * 0.64;
 
       for (let y = lineTop; y <= lineBottom; y += 2) {
-        const localY = y;
         const bands = [];
 
-        if (localY >= overbarTop && localY <= overbarTop + overbarHeight) {
+        if (y >= overbarTop && y <= overbarTop + overbarHeight) {
           bands.push({
             left: left + width * 0.43,
             right: left + width * 0.95
@@ -112,7 +117,7 @@ export async function initInteractive({
         }
 
         const lowerHook = bandBounds(
-          localY,
+          y,
           rootTop + rootHeight * 0.52,
           rootHeight * 0.3,
           left + width * 0.02,
@@ -125,7 +130,7 @@ export async function initInteractive({
         }
 
         const risingStem = bandBounds(
-          localY,
+          y,
           rootTop + rootHeight * 0.34,
           rootHeight * 0.42,
           left + width * 0.14,
@@ -137,8 +142,8 @@ export async function initInteractive({
           bands.push(risingStem);
         }
 
-        if (localY >= threeTop && localY <= threeTop + threeHeight) {
-          const relativeY = (localY - threeTop) / threeHeight;
+        if (y >= threeTop && y <= threeTop + threeHeight) {
+          const relativeY = (y - threeTop) / threeHeight;
           const centerX = left + width * 0.72;
           const upperArc = Math.abs(relativeY - 0.27) <= 0.22
             ? Math.sqrt(1 - ((relativeY - 0.27) / 0.22) ** 2) * width * 0.17
@@ -176,24 +181,24 @@ export async function initInteractive({
       };
     };
 
-    const consumeSegment = (cursor, width) => {
+    const consumeSegment = (cursor, width, preparedLine) => {
       if (width <= 0) {
         return null;
       }
 
-      const range = layoutNextLineRange(state.prepared, cursor, width);
+      const range = layoutNextLineRange(preparedLine, cursor, width);
       if (!range) {
         return null;
       }
 
-      const line = materializeLineRange(state.prepared, range);
+      const line = materializeLineRange(preparedLine, range);
       return { cursor: range.end, line };
     };
 
     const render = () => {
       state.renderFrame = 0;
 
-      if (!state.prepared) {
+      if (!state.preparedLines.length) {
         return;
       }
 
@@ -203,77 +208,89 @@ export async function initInteractive({
       }
 
       const segments = [];
-      let cursor = { segmentIndex: 0, graphemeIndex: 0 };
       let y = 0;
-      let guard = 0;
 
-      while (guard < 4000) {
-        guard += 1;
-        const lineTop = y;
-        const lineBottom = y + state.lineHeight;
-        const obstacle = obstacleForLine(lineTop, lineBottom);
+      state.preparedLines.forEach((preparedLine, itemIndex) => {
+        let cursor = { segmentIndex: 0, graphemeIndex: 0 };
+        let localGuard = 0;
+        let consumedAny = false;
 
-        if (!obstacle) {
-          const piece = consumeSegment(cursor, width);
-          if (!piece) {
+        while (localGuard < 400) {
+          localGuard += 1;
+          const lineTop = y;
+          const lineBottom = y + state.lineHeight;
+          const obstacle = obstacleForLine(lineTop, lineBottom);
+
+          if (!obstacle) {
+            const piece = consumeSegment(cursor, width, preparedLine);
+            if (!piece) {
+              break;
+            }
+
+            segments.push({
+              text: piece.line.text,
+              x: 0,
+              y,
+              width,
+              itemIndex
+            });
+
+            cursor = piece.cursor;
+            y += state.lineHeight;
+            consumedAny = true;
+            continue;
+          }
+
+          const leftWidth = Math.max(0, obstacle.left);
+          const rightX = Math.min(width, obstacle.right);
+          const rightWidth = Math.max(0, width - rightX);
+          let moved = false;
+
+          if (leftWidth > 54) {
+            const leftPiece = consumeSegment(cursor, leftWidth, preparedLine);
+            if (leftPiece && leftPiece.line.text) {
+              segments.push({
+                text: leftPiece.line.text,
+                x: 0,
+                y,
+                width: leftWidth,
+                itemIndex
+              });
+              cursor = leftPiece.cursor;
+              moved = true;
+              consumedAny = true;
+            }
+          }
+
+          if (rightWidth > 54) {
+            const rightPiece = consumeSegment(cursor, rightWidth, preparedLine);
+            if (rightPiece && rightPiece.line.text) {
+              segments.push({
+                text: rightPiece.line.text,
+                x: rightX,
+                y,
+                width: rightWidth,
+                itemIndex
+              });
+              cursor = rightPiece.cursor;
+              moved = true;
+              consumedAny = true;
+            }
+          }
+
+          if (!moved) {
             break;
           }
 
-          segments.push({
-            text: piece.line.text,
-            x: 0,
-            y,
-            width
-          });
-
-          cursor = piece.cursor;
           y += state.lineHeight;
-          continue;
         }
 
-        const leftWidth = Math.max(0, obstacle.left);
-        const rightX = Math.min(width, obstacle.right);
-        const rightWidth = Math.max(0, width - rightX);
-        let moved = false;
-
-        if (leftWidth > 54) {
-          const leftPiece = consumeSegment(cursor, leftWidth);
-          if (leftPiece && leftPiece.line.text) {
-            segments.push({
-              text: leftPiece.line.text,
-              x: 0,
-              y,
-              width: leftWidth
-            });
-            cursor = leftPiece.cursor;
-            moved = true;
-          }
-        }
-
-        if (rightWidth > 54) {
-          const rightPiece = consumeSegment(cursor, rightWidth);
-          if (rightPiece && rightPiece.line.text) {
-            segments.push({
-              text: rightPiece.line.text,
-              x: rightX,
-              y,
-              width: rightWidth
-            });
-            cursor = rightPiece.cursor;
-            moved = true;
-          }
-        }
-
-        y += state.lineHeight;
-
-        if (!moved && !leftWidth && !rightWidth) {
-          continue;
-        }
-      }
+        y += consumedAny ? state.lineHeight * 0.8 : state.lineHeight * 1.8;
+      });
 
       flow.style.height = `${Math.max(y + 8, state.iconHeight + 90)}px`;
       flow.innerHTML = segments.map((segment) => (
-        `<span class="flow-fragment" style="max-width:${segment.width}px;transform:translate(${segment.x}px,${segment.y}px)">${escapeHtml(segment.text)}</span>`
+        `<span class="flow-fragment" data-flow-item="${segment.itemIndex}" style="max-width:${segment.width}px;transform:translate(${segment.x}px,${segment.y}px)">${escapeHtml(segment.text)}</span>`
       )).join("");
     };
 
@@ -318,8 +335,8 @@ export async function initInteractive({
       const minY = 18;
       const maxY = Math.max(minY, rect.height - state.iconHeight - 24);
 
-      state.pointerX = clamp(clientX - rect.left - state.iconWidth * 0.36, minX, maxX);
-      state.pointerY = clamp(clientY - rect.top - state.iconHeight * 0.42, minY, maxY);
+      state.pointerX = clamp(clientX - rect.left - state.iconWidth * 0.5, minX, maxX);
+      state.pointerY = clamp(clientY - rect.top - state.iconHeight * 0.52, minY, maxY);
       queueMotion();
     };
 
@@ -328,7 +345,16 @@ export async function initInteractive({
     });
 
     stage.addEventListener("pointerenter", (event) => {
+      state.active = true;
+      document.body.classList.add("hide-global-sqrt-cursor");
       updatePointer(event.clientX, event.clientY);
+    });
+
+    stage.addEventListener("pointerleave", () => {
+      state.active = false;
+      document.body.classList.remove("hide-global-sqrt-cursor");
+      positionIcon();
+      queueRender();
     });
 
     const resizeObserver = new ResizeObserver(() => {
@@ -343,6 +369,7 @@ export async function initInteractive({
     await document.fonts.ready;
     updatePrepared();
     updateBounds();
+    state.active = false;
     positionIcon();
     queueRender();
   } catch {

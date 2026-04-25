@@ -1,6 +1,6 @@
-import { siteContent } from "../data/site-content.js";
-import { initInteractive } from "./interactive.js";
-import { initPoemPanel } from "./poem-panel.js";
+import { siteContent } from "../data/site-content.js?v=20260413g";
+import { initInteractive } from "./interactive.js?v=20260413g";
+import { initPoemPanel } from "./poem-panel.js?v=20260413g";
 
 window.__resumeBooted = true;
 
@@ -8,6 +8,64 @@ const appPoemSidebar = document.getElementById("poem-sidebar");
 const appHeader = document.getElementById("site-header");
 const appMain = document.getElementById("site-main");
 const appFooter = document.getElementById("site-footer");
+
+const initGlobalSqrtCursor = () => {
+  if (window.matchMedia("(pointer: coarse)").matches) {
+    return;
+  }
+
+  const cursor = document.createElement("div");
+  cursor.className = "global-sqrt-cursor";
+  cursor.setAttribute("aria-hidden", "true");
+  cursor.innerHTML = `
+    <img src="assets/sqrt3-handwritten-c.svg" alt="">
+  `;
+  document.body.appendChild(cursor);
+
+  const state = {
+    x: window.innerWidth * 0.5,
+    y: window.innerHeight * 0.5,
+    targetX: window.innerWidth * 0.5,
+    targetY: window.innerHeight * 0.5,
+    frame: 0,
+    active: false
+  };
+
+  const render = () => {
+    state.frame = 0;
+    state.x += (state.targetX - state.x) * 0.26;
+    state.y += (state.targetY - state.y) * 0.26;
+    cursor.style.transform = `translate(${state.x}px, ${state.y}px)`;
+
+    if (Math.abs(state.targetX - state.x) > 0.2 || Math.abs(state.targetY - state.y) > 0.2) {
+      state.frame = requestAnimationFrame(render);
+    }
+  };
+
+  const queue = () => {
+    if (!state.frame) {
+      state.frame = requestAnimationFrame(render);
+    }
+  };
+
+  window.addEventListener("pointermove", (event) => {
+    state.targetX = event.clientX;
+    state.targetY = event.clientY;
+    if (!state.active) {
+      state.active = true;
+      cursor.classList.add("is-visible");
+    }
+    queue();
+  });
+
+  window.addEventListener("pointerdown", () => {
+    cursor.classList.add("is-pressed");
+  });
+
+  window.addEventListener("pointerup", () => {
+    cursor.classList.remove("is-pressed");
+  });
+};
 
 const renderBootError = (error) => {
   const message = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
@@ -131,40 +189,28 @@ const renderMediaGrid = (section) => `
   </div>
 `;
 
-const renderInteractive = (section) => `
-  <div class="interactive-card panel" id="interactive-card">
-    <p class="interactive-kicker">${section.kicker}</p>
-    <h3 class="interactive-heading">${section.heading}</h3>
-    <p class="interactive-note">${section.note}</p>
+const renderReflow = (section) => `
+  <div
+    class="interactive-card reflow-card"
+    data-reflow-section
+    data-reflow-lines='${JSON.stringify(
+      section.id === "news"
+        ? section.items.map((item) => `[${item.date}] ${item.text}`)
+        : section.items.map((item) => `${item.title}. ${item.description}`)
+    )}'
+  >
     <div class="interactive-controls">
-      <p class="interactive-instruction">${section.controlLabel}</p>
+      <p class="interactive-instruction">${section.instruction}</p>
     </div>
-    <div class="interactive-stage" id="interactive-stage">
-      <div class="interactive-flow" id="interactive-flow" aria-live="polite"></div>
-      <div class="icon-wrap" id="icon-wrap" aria-hidden="true">
-        <svg
-          class="interactive-icon interactive-root-icon"
-          id="interactive-icon"
-          viewBox="0 0 320 320"
-          role="presentation"
+    <div class="interactive-stage" data-reflow-stage>
+      <div class="interactive-flow" data-reflow-flow aria-live="polite"></div>
+      <div class="icon-wrap" data-reflow-icon-wrap aria-hidden="true">
+        <img
+          class="interactive-icon"
+          data-reflow-icon
+          src="assets/sqrt3-handwritten-c.svg"
+          alt=""
         >
-          <path
-            d="M34 183h42l32 73L154 82h132"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="28"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <text
-            x="200"
-            y="220"
-            text-anchor="middle"
-            font-size="148"
-            font-weight="700"
-            font-family="Georgia, Times New Roman, serif"
-          >3</text>
-        </svg>
       </div>
     </div>
   </div>
@@ -175,7 +221,7 @@ const sectionRenderers = {
   list: renderList,
   experience: renderExperience,
   "media-grid": renderMediaGrid,
-  interactive: renderInteractive
+  reflow: renderReflow
 };
 
 const renderSections = (sections) => {
@@ -192,22 +238,21 @@ const renderFooter = (footer) => {
 };
 
 try {
+  initGlobalSqrtCursor();
   renderPoemSidebar(siteContent.poemPanel);
   renderHeader(siteContent.header);
   renderSections(siteContent.sections);
   renderFooter(siteContent.footer);
 
-  const interactiveSection = siteContent.sections.find((section) => section.type === "interactive");
-
-  if (interactiveSection) {
+  document.querySelectorAll("[data-reflow-section]").forEach((sectionElement) => {
     initInteractive({
-      stage: document.getElementById("interactive-stage"),
-      flow: document.getElementById("interactive-flow"),
-      iconWrap: document.getElementById("icon-wrap"),
-      icon: document.getElementById("interactive-icon"),
-      copy: interactiveSection.interactiveCopy
+      stage: sectionElement.querySelector("[data-reflow-stage]"),
+      flow: sectionElement.querySelector("[data-reflow-flow]"),
+      iconWrap: sectionElement.querySelector("[data-reflow-icon-wrap]"),
+      icon: sectionElement.querySelector("[data-reflow-icon]"),
+      lines: JSON.parse(sectionElement.dataset.reflowLines || "[]")
     });
-  }
+  });
 
   initPoemPanel({
     root: appPoemSidebar,
