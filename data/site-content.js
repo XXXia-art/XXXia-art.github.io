@@ -2,8 +2,6 @@
   poemPanel: {
     title: "孤独的根号三",
     author: "大卫·范伯格",
-    sourceLabel: "PoemWiki",
-    sourceHref: "https://poemwiki.org/p/MTM3ODkwOTA5MDg5ODM4",
     lines: [
       "我怕我永远是一个孤独的数字",
       "像那根号三",
@@ -29,15 +27,11 @@
     ]
   },
   header: {
-    name: "Puzhi Xia",
+    name: "Puzhi Xia 夏浦智",
     subtitle: "Junior Student, Southeast University",
     summary: [
-      "My research interests mainly focus on model editing, diffusion models, and sequential concept erasure.",
+      "My main interests lie in design, super AI, and market forecasting.",
       "I am currently working on improving the stability and robustness of sequential editing methods for diffusion models."
-    ],
-    links: [
-      { label: "GitHub", href: "https://github.com/XXXia-art" },
-      { label: "Google Scholar", href: "https://scholar.google.com/" }
     ],
     badges: [
       {
@@ -50,14 +44,6 @@
         src: "https://img.shields.io/badge/GitHub-XXXia--art-181717?logo=github&logoColor=white",
         alt: "GitHub Badge"
       },
-      {
-        src: "https://img.shields.io/badge/Intern-Huawei-C7000B?logo=huawei&logoColor=white",
-        alt: "Huawei Internship Badge"
-      },
-      {
-        src: "https://img.shields.io/badge/Country-China-red",
-        alt: "China Badge"
-      }
     ],
     photo: {
       src: "assets/myself.jpg",
@@ -69,27 +55,15 @@
       id: "news",
       title: "News",
       type: "reflow",
-      instruction: "Your cursor becomes sqrt(3) in this section",
-      copy: [
-        "[2026.04] Building my academic homepage on GitHub Pages.",
-        "[2026.03] Working on sequential editing methods for diffusion models.",
-        "[2026.02] Exploring how to combine SPEED, AlphaEdit, and DeltaEdit ideas."
-      ].join(" "),
       items: [
-        { date: "2026.04", text: "Building my academic homepage on GitHub Pages." },
-        { date: "2026.03", text: "Working on sequential editing methods for diffusion models." },
-        { date: "2026.02", text: "Exploring how to combine SPEED, AlphaEdit, and DeltaEdit ideas." }
+        { date: "[2026.04]-[now]", text: "Building my personal website on GitHub Pages." },
+        { date: "[2026.03]-[now]", text: "Working on sequential editing methods for diffusion models." },
       ]
     },
     {
       id: "projects",
       title: "Projects",
       type: "reflow",
-      instruction: "Your cursor becomes sqrt(3) in this section",
-      copy: [
-        "Sequential Concept Editing for Stable Diffusion. A research project on improving multi-step concept erasure while reducing interference with prior edits and preserving generation quality.",
-        "Diffusion Model Editing with Historical Subspace Constraints. Investigating how to project current updates away from historical edit directions while maintaining effective editing performance."
-      ].join(" "),
       items: [
         {
           title: "Sequential Concept Editing for Stable Diffusion",
@@ -130,7 +104,7 @@
         {
           title: "Favorite Film",
           name: "The Shawshank Redemption",
-          image: "https://upload.wikimedia.org/wikipedia/en/8/81/ShawshankRedemptionMoviePoster.jpg",
+          image: "assets/shawshank.jpg",
           imageAlt: "The Shawshank Redemption theatrical poster",
           description:
             "I love its quiet confidence and the way it turns endurance, friendship, and hope into something deeply persuasive.",
@@ -141,7 +115,7 @@
         {
           title: "Favorite Writer",
           name: "Gabriel Garcia Marquez",
-          image: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Gabriel_Garcia_Marquez.jpg",
+          image: "assets/marquez.jpg",
           imageAlt: "Portrait of Gabriel Garcia Marquez",
           description:
             "I admire the warmth and inevitability in his prose, especially how the miraculous can feel completely natural inside ordinary life.",

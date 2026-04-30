@@ -122,8 +122,12 @@ img {
   align-items: center;
   justify-content: space-between;
   gap: 36px;
-  padding: 32px;
+  padding: 32px 0;
   margin-bottom: 20px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
 .poem-shell {

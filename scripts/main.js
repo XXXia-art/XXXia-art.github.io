@@ -1,6 +1,6 @@
-import { siteContent } from "../data/site-content.js?v=20260413g";
-import { initInteractive } from "./interactive.js?v=20260413g";
-import { initPoemPanel } from "./poem-panel.js?v=20260413g";
+import { siteContent } from "../data/site-content.js?v=20260427";
+import { initInteractive } from "./interactive.js?v=20260427";
+import { initPoemPanel } from "./poem-panel.js?v=20260427";
 
 window.__resumeBooted = true;
 
@@ -104,7 +104,6 @@ const renderPoemSidebar = (poemPanel) => {
       <div class="poem-meta poem-meta-top">
         <p class="poem-title">${poemPanel.title}</p>
         <p class="poem-author">${poemPanel.author}</p>
-        <a href="${poemPanel.sourceHref}" target="_blank" rel="noreferrer">${poemPanel.sourceLabel}</a>
       </div>
       <div class="poem-viewport" data-poem-viewport>
         <div class="poem-flow" data-poem-flow></div>
@@ -119,7 +118,6 @@ const renderHeader = (header) => {
       <h1 class="name">${header.name}</h1>
       <p class="subtitle">${header.subtitle}</p>
       ${header.summary.map((paragraph) => `<p class="research">${paragraph}</p>`).join("")}
-      <div class="links">${header.links.map(createLinkMarkup).join(" / ")}</div>
       <div class="badge-row">${header.badges.map(createBadgeMarkup).join("")}</div>
     </div>
     <div class="photo-box">
@@ -195,13 +193,10 @@ const renderReflow = (section) => `
     data-reflow-section
     data-reflow-lines='${JSON.stringify(
       section.id === "news"
-        ? section.items.map((item) => `[${item.date}] ${item.text}`)
+        ? section.items.map((item) => `${item.date} ${item.text}`)
         : section.items.map((item) => `${item.title}. ${item.description}`)
     )}'
   >
-    <div class="interactive-controls">
-      <p class="interactive-instruction">${section.instruction}</p>
-    </div>
     <div class="interactive-stage" data-reflow-stage>
       <div class="interactive-flow" data-reflow-flow aria-live="polite"></div>
       <div class="icon-wrap" data-reflow-icon-wrap aria-hidden="true">
@@ -235,6 +230,13 @@ const renderSections = (sections) => {
 
 const renderFooter = (footer) => {
   appFooter.textContent = `Last updated: ${footer.updated}`;
+};
+
+const showApp = () => {
+  const app = document.getElementById("app");
+  if (app) {
+    app.classList.add("is-visible");
+  }
 };
 
 try {
