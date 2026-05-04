@@ -54,27 +54,30 @@
     {
       id: "news",
       title: "News",
-      type: "reflow",
+      type: "timeline",
       items: [
-        { date: "[2026.04]-[now]", text: "Building my personal website on GitHub Pages." },
-        { date: "[2026.03]-[now]", text: "Working on sequential editing methods for diffusion models." },
+        { date: "<em>[2026.05]</em>", text: " I am currently developing <em><strong>a grand board game</strong></em>💰." },
+        { date: "<em>[2026.04]</em>", text: " Building my <em><strong>personal website</strong></em> on GitHub Pages." },
+        { date: "<em>[2026.03]</em>", text: " Working on <em><strong>sequential unlearning</strong></em> methods for diffusion models." },
       ]
     },
     {
       id: "projects",
       title: "Projects",
-      type: "reflow",
+      type: "list",
       items: [
         {
-          title: "Sequential Concept Editing for Stable Diffusion",
+          title: "Sequential Concept Unlearning for Stable Diffusion",
           description:
             "A research project on improving multi-step concept erasure while reducing interference with prior edits and preserving generation quality."
         },
+
         {
-          title: "Diffusion Model Editing with Historical Subspace Constraints",
+          title: "Positional Sensitivity of ICL in DLLMs",
           description:
-            "Investigating how to project current updates away from historical edit directions while maintaining effective editing performance."
+            "A systematic analysis of positional bias in Diffusion LLMs. We reveal that query position is a first-order variable affecting ICL performance, identify a Recency Effect via Attention Rollout."
         }
+      
       ]
     },
     {
@@ -84,11 +87,11 @@
       items: [
         {
           badge: {
-            src: "https://img.shields.io/badge/Huawei-Intern-C7000B?logo=huawei&logoColor=white",
-            alt: "Huawei badge"
+            src: "assets/huawei.svg",
+            alt: "Huawei logo"
           },
           organization: "Huawei",
-          role: "Research Intern",
+          role: "AI Software Development Engineer",
           period: "Jul. 2025 - Sep. 2025",
           description: "Worked on model editing and generative model related research projects."
         }

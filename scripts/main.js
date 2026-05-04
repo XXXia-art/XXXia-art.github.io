@@ -118,10 +118,20 @@ const renderHeader = (header) => {
       <h1 class="name">${header.name}</h1>
       <p class="subtitle">${header.subtitle}</p>
       ${header.summary.map((paragraph) => `<p class="research">${paragraph}</p>`).join("")}
-      <div class="badge-row">${header.badges.map(createBadgeMarkup).join("")}</div>
     </div>
     <div class="photo-box">
       <img class="profile-photo" src="${header.photo.src}" alt="${header.photo.alt}">
+      <div class="icon-row">
+        <a href="https://github.com/XXXia-art" target="_blank" rel="noreferrer" aria-label="GitHub">
+          <svg class="header-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <a href="mailto:pz.xia@qq.com" aria-label="Email">
+          <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </a>
+        <a href="https://v.douyin.com/9cOubR7hTTE" target="_blank" rel="noreferrer" aria-label="TikTok">
+          <svg class="header-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        </a>
+      </div>
     </div>
   `;
 };
@@ -130,7 +140,7 @@ const renderTimeline = (section) => `
   <ul class="timeline-list">
     ${section.items.map((item) => `
       <li>
-        <span class="date">[${item.date}]</span>${item.text}
+        <span class="news-date">${item.date}</span><span class="news-text">${item.text}</span>
       </li>
     `).join("")}
   </ul>
@@ -151,13 +161,13 @@ const renderExperience = (section) => `
   <ul class="experience-list">
     ${section.items.map((item) => `
       <li>
-        <div class="company-inline">
-          <img src="${item.badge.src}" alt="${item.badge.alt}">
+        <div class="exp-line">
+          <img class="exp-logo" src="${item.badge.src}" alt="${item.badge.alt}">
+          <span class="exp-org">${item.organization}</span>
+          <span class="exp-role">${item.role}</span>
+          <span class="exp-period">${item.period}</span>
         </div>
-        <br>
-        <strong>${item.organization}</strong>, ${item.role}<br>
-        ${item.period}<br>
-        ${item.description}
+        <p class="exp-desc">${item.description}</p>
       </li>
     `).join("")}
   </ul>
@@ -193,8 +203,8 @@ const renderReflow = (section) => `
     data-reflow-section
     data-reflow-lines='${JSON.stringify(
       section.id === "news"
-        ? section.items.map((item) => `${item.date} ${item.text}`)
-        : section.items.map((item) => `${item.title}. ${item.description}`)
+        ? section.items.map((item) => `${item.date}  ${item.text}`)
+        : section.items.map((item) => `${item.title}.\n${item.description}`)
     )}'
   >
     <div class="interactive-stage" data-reflow-stage>

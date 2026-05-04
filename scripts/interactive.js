@@ -290,7 +290,7 @@ export async function initInteractive({
 
       flow.style.height = `${Math.max(y + 8, state.iconHeight + 90)}px`;
       flow.innerHTML = segments.map((segment) => (
-        `<span class="flow-fragment" data-flow-item="${segment.itemIndex}" style="max-width:${segment.width}px;transform:translate(${segment.x}px,${segment.y}px)">${escapeHtml(segment.text)}</span>`
+        `<span class="flow-fragment" data-flow-item="${segment.itemIndex}" style="max-width:${segment.width}px;transform:translate(${segment.x}px,${segment.y}px)">${segment.text}</span>`
       )).join("");
     };
 
