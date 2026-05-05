@@ -100,31 +100,16 @@
     {
       id: "interests",
       title: "Interests",
-      type: "media-grid",
-      intro:
-        "Outside research, I return to stories that combine patience, hope, and imagination. These two works have stayed with me for a long time.",
+      type: "list",
+      intro: "Outside of research, I enjoy reading and watching films. Here are some of my favorites:",
       items: [
         {
-          title: "Favorite Film",
-          name: "The Shawshank Redemption",
-          image: "assets/shawshank.jpg",
-          imageAlt: "The Shawshank Redemption theatrical poster",
-          description:
-            "I love its quiet confidence and the way it turns endurance, friendship, and hope into something deeply persuasive.",
-          meta: "Dir. Frank Darabont, 1994",
-          creditLabel: "Poster source",
-          creditHref: "https://en.wikipedia.org/wiki/The_Shawshank_Redemption"
+          title: "Books",
+          description: "《One Hundred Years of Solitude》《Rage of Angels》"
         },
         {
-          title: "Favorite Writer",
-          name: "Gabriel Garcia Marquez",
-          image: "assets/marquez.jpg",
-          imageAlt: "Portrait of Gabriel Garcia Marquez",
-          description:
-            "I admire the warmth and inevitability in his prose, especially how the miraculous can feel completely natural inside ordinary life.",
-          meta: "Author of One Hundred Years of Solitude",
-          creditLabel: "Photo source",
-          creditHref: "https://commons.wikimedia.org/wiki/File:Gabriel_Garcia_Marquez.jpg"
+          title: "Movies",
+          description: "《The Shawshank Redemption》《Green Book》"
         }
       ]
     }

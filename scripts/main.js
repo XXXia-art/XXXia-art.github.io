@@ -147,6 +147,7 @@ const renderTimeline = (section) => `
 `;
 
 const renderList = (section) => `
+  ${section.intro ? `<p class="section-intro">${section.intro}</p>` : ""}
   <ul class="content-list">
     ${section.items.map((item) => `
       <li>
@@ -174,26 +175,18 @@ const renderExperience = (section) => `
 `;
 
 const renderMediaGrid = (section) => `
-  <div class="interests-block">
-    <p class="section-intro">${section.intro}</p>
-    <div class="interest-grid">
-      ${section.items.map((item) => `
-        <article class="interest-card panel">
-          <div class="interest-media">
-            <img src="${item.image}" alt="${item.imageAlt}">
-          </div>
-          <div class="interest-copy">
-            <p class="interest-label">${item.title}</p>
-            <h3 class="interest-name">${item.name}</h3>
-            <p class="interest-meta">${item.meta}</p>
-            <p>${item.description}</p>
-            <p class="interest-credit">
-              <a href="${item.creditHref}" target="_blank" rel="noreferrer">${item.creditLabel}</a>
-            </p>
-          </div>
-        </article>
-      `).join("")}
-    </div>
+  <div class="interest-grid">
+    ${section.items.map((item) => `
+      <article class="interest-card panel">
+        <div class="interest-media">
+          <img src="${item.image}" alt="${item.imageAlt}">
+        </div>
+        <div class="interest-copy">
+          <h3 class="interest-name">${item.name}</h3>
+          <p class="interest-meta">${item.meta}</p>
+        </div>
+      </article>
+    `).join("")}
   </div>
 `;
 

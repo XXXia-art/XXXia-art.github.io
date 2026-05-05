@@ -397,8 +397,9 @@ li {
 
 .interest-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 240px));
   gap: 20px;
+  justify-content: center;
 }
 
 .interest-card {
@@ -406,15 +407,14 @@ li {
 }
 
 .interest-media {
-  aspect-ratio: 4 / 5;
   overflow: hidden;
   background: #e8dfcf;
 }
 
 .interest-media img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  display: block;
 }
 
 .interest-copy {
