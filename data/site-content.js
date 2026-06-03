@@ -101,15 +101,23 @@
       id: "interests",
       title: "Interests",
       type: "list",
-      intro: "Outside of research, I enjoy reading and watching films. Here are some of my favorites:",
+      intro: "Outside of research, I enjoy reading and watching films. Here are some of my favorites, you can check out more interesting content on my TicTok account.",
       items: [
         {
           title: "Books",
-          description: "《One Hundred Years of Solitude》《Rage of Angels》"
+          description: "《One Hundred Years of Solitude》《Rage of Angels》",
+          images: [
+            { src: "assets/100-years-solitude.jpg", alt: "One Hundred Years of Solitude" },
+            { src: "assets/rage-of-angels.jpg", alt: "Rage of Angels" }
+          ]
         },
         {
           title: "Movies",
-          description: "《The Shawshank Redemption》《Green Book》"
+          description: "《The Shawshank Redemption》《Green Book》",
+          images: [
+            { src: "assets/shawshank.jpg", alt: "The Shawshank Redemption" },
+            { src: "assets/green-book.jpg", alt: "Green Book" }
+          ]
         }
       ]
     }

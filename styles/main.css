@@ -103,6 +103,8 @@ img {
   top: 0;
   right: calc(100% + var(--sidebar-gap));
   width: var(--sidebar-width);
+  display: flex;
+  flex-direction: column;
 }
 
 .content-column {
@@ -211,6 +213,17 @@ img {
   color: rgba(37, 99, 235, 0.56);
 }
 
+.physics-icons-container {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 350px;
+  margin-top: 24px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.03);
+}
+
 .intro {
   flex: 1;
 }
@@ -263,6 +276,20 @@ img {
   display: block;
 }
 
+.seu-badge {
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  margin-left: 8px;
+  vertical-align: middle;
+  opacity: 0.65;
+  transition: opacity 200ms ease;
+}
+
+.seu-badge:hover {
+  opacity: 1;
+}
+
 .photo-box {
   width: 220px;
   flex-shrink: 0;
@@ -270,6 +297,11 @@ img {
   flex-direction: column;
   align-items: center;
   gap: 16px;
+}
+
+.photo-wrap {
+  position: relative;
+  width: 100%;
 }
 
 .profile-photo {
@@ -287,6 +319,27 @@ img {
 .section-title {
   font-size: 28px;
   margin: 0 0 16px;
+}
+
+.interest-thumbnails {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.interest-thumbnails img {
+  height: 260px;
+  width: auto;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  object-fit: cover;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.interest-thumbnails img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
   font-weight: 700;
   color: #111827;
 }
@@ -643,6 +696,10 @@ li {
 
   .profile-photo {
     max-width: 180px;
+  }
+
+  .interest-thumbnails img {
+    height: 260px;
   }
 
   .name {
