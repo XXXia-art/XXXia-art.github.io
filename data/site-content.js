@@ -46,9 +46,63 @@
       },
     ],
     photo: {
-      src: "assets/myself.jpg",
+      src: "assets/profile/myself.jpg",
       alt: "Puzhi Xia portrait"
     }
+  },
+  badgeWall: {
+    items: [
+      {
+        label: "ChatGPT",
+        src: "assets/badges/chatgpt.svg",
+        alt: "ChatGPT icon"
+      },
+      {
+        label: "Claude",
+        src: "assets/badges/claude.svg",
+        alt: "Claude icon"
+      },
+      {
+        label: "Kimi",
+        src: "assets/badges/kimi.svg",
+        alt: "Kimi icon"
+      },
+      {
+        label: "Mimo",
+        src: "assets/badges/mimo.svg",
+        alt: "Mimo icon"
+      },
+      {
+        label: "VS Code",
+        src: "assets/badges/vscode.svg",
+        alt: "VS Code icon"
+      },
+      {
+        label: "GitHub",
+        src: "assets/badges/github.svg",
+        alt: "GitHub icon"
+      },
+      {
+        label: "Clash Verge",
+        src: "assets/badges/clash-verge.svg",
+        alt: "Clash Verge icon"
+      },
+      {
+        label: "Codex",
+        src: "assets/badges/codex.svg",
+        alt: "Codex icon"
+      },
+      {
+        label: "BigBang",
+        src: "assets/badges/bigbang.png",
+        alt: "BigBang icon"
+      },
+      {
+        label: "EXO",
+        src: "assets/badges/exo.png",
+        alt: "EXO icon"
+      }
+    ]
   },
   sections: [
     {
@@ -87,7 +141,7 @@
       items: [
         {
           badge: {
-            src: "assets/huawei.svg",
+            src: "assets/affiliations/huawei.svg",
             alt: "Huawei logo"
           },
           organization: "Huawei",
@@ -107,16 +161,16 @@
           title: "Books",
           description: "《One Hundred Years of Solitude》《Rage of Angels》",
           images: [
-            { src: "assets/100-years-solitude.jpg", alt: "One Hundred Years of Solitude" },
-            { src: "assets/rage-of-angels.jpg", alt: "Rage of Angels" }
+            { src: "assets/interests/books/100-years-solitude.jpg", alt: "One Hundred Years of Solitude" },
+            { src: "assets/interests/books/rage-of-angels.jpg", alt: "Rage of Angels" }
           ]
         },
         {
           title: "Movies",
           description: "《The Shawshank Redemption》《Green Book》",
           images: [
-            { src: "assets/shawshank.jpg", alt: "The Shawshank Redemption" },
-            { src: "assets/green-book.jpg", alt: "Green Book" }
+            { src: "assets/interests/movies/shawshank.jpg", alt: "The Shawshank Redemption" },
+            { src: "assets/interests/movies/green-book.jpg", alt: "Green Book" }
           ]
         }
       ]

@@ -10,6 +10,7 @@
   --main-width: 920px;
   --sidebar-gap: clamp(18px, 2.4vw, 42px);
   --sidebar-width: clamp(190px, calc((100vw - var(--main-width)) / 2 - var(--sidebar-gap) - 28px), 420px);
+  --badge-wall-width: clamp(210px, calc((100vw - var(--main-width)) / 2 - var(--sidebar-gap) - 28px), 340px);
 }
 
 * {
@@ -105,6 +106,39 @@ img {
   width: var(--sidebar-width);
   display: flex;
   flex-direction: column;
+}
+
+.badge-wall {
+  position: absolute;
+  top: 16px;
+  left: calc(100% + var(--sidebar-gap));
+  width: var(--badge-wall-width);
+}
+
+.badge-wall-inner {
+  position: sticky;
+  top: 48px;
+}
+
+.badge-wall-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px 14px;
+  align-items: start;
+}
+
+.wall-medal {
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  color: rgba(31, 41, 55, 0.72);
+}
+
+.wall-medal img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 14px rgba(83, 63, 27, 0.08));
 }
 
 .content-column {
@@ -640,6 +674,20 @@ li {
     margin-bottom: 24px;
   }
 
+  .badge-wall {
+    position: static;
+    width: auto;
+    margin-top: 28px;
+  }
+
+  .badge-wall-inner {
+    position: static;
+  }
+
+  .badge-wall-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .poem-viewport {
     min-height: 620px;
   }
@@ -711,6 +759,10 @@ li {
   }
 
   .interest-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .badge-wall-grid {
     grid-template-columns: 1fr;
   }
 

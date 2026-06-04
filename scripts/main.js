@@ -1,10 +1,11 @@
-import { siteContent } from "../data/site-content.js?v=20260509";
-import { initInteractive } from "./interactive.js?v=20260427";
-import { initPoemPanel } from "./poem-panel.js?v=20260427";
+import { siteContent } from "../data/site-content.js?v=20260604-kpop-icons";
+import { initInteractive } from "./interactive.js?v=20260604-kpop-icons";
+import { initPoemPanel } from "./poem-panel.js?v=20260604-kpop-icons";
 
 window.__resumeBooted = true;
 
 const appPoemSidebar = document.getElementById("poem-sidebar");
+const appBadgeWall = document.getElementById("badge-wall");
 const appHeader = document.getElementById("site-header");
 const appMain = document.getElementById("site-main");
 const appFooter = document.getElementById("site-footer");
@@ -18,7 +19,7 @@ const initGlobalSqrtCursor = () => {
   cursor.className = "global-sqrt-cursor";
   cursor.setAttribute("aria-hidden", "true");
   cursor.innerHTML = `
-    <img src="assets/sqrt3-handwritten-c.svg" alt="">
+    <img src="assets/decorative/sqrt3-handwritten-c.svg" alt="">
   `;
   document.body.appendChild(cursor);
 
@@ -112,11 +113,29 @@ const renderPoemSidebar = (poemPanel) => {
   `;
 };
 
+const renderBadgeWall = (badgeWall) => {
+  if (!appBadgeWall || !badgeWall) {
+    return;
+  }
+
+  appBadgeWall.innerHTML = `
+    <div class="badge-wall-inner">
+      <div class="badge-wall-grid">
+        ${badgeWall.items.map((item) => `
+          <figure class="wall-medal">
+            <img src="${item.src}" alt="${item.alt}" loading="lazy">
+          </figure>
+        `).join("")}
+      </div>
+    </div>
+  `;
+};
+
 const renderHeader = (header) => {
   appHeader.innerHTML = `
     <div class="intro">
       <h1 class="name">${header.name}</h1>
-      <p class="subtitle">${header.subtitle} <img class="seu-badge" src="assets/seu-logo.svg" alt="SEU" loading="lazy"></p>
+      <p class="subtitle">${header.subtitle} <img class="seu-badge" src="assets/affiliations/seu.svg" alt="SEU" loading="lazy"></p>
       ${header.summary.map((paragraph) => `<p class="research">${paragraph}</p>`).join("")}
     </div>
     <div class="photo-box">
@@ -209,7 +228,7 @@ const renderReflow = (section) => `
         <img
           class="interactive-icon"
           data-reflow-icon
-          src="assets/sqrt3-handwritten-c.svg"
+          src="assets/decorative/sqrt3-handwritten-c.svg"
           alt=""
         >
       </div>
@@ -248,6 +267,7 @@ const showApp = () => {
 try {
   initGlobalSqrtCursor();
   renderPoemSidebar(siteContent.poemPanel);
+  renderBadgeWall(siteContent.badgeWall);
   renderHeader(siteContent.header);
   renderSections(siteContent.sections);
   renderFooter(siteContent.footer);
