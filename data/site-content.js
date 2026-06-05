@@ -51,6 +51,9 @@
     }
   },
   badgeWall: {
+    eyebrow: "Things I Like",
+    title: "Badge Wall",
+    version: "20260605-valorant",
     items: [
       {
         label: "ChatGPT",
@@ -101,6 +104,36 @@
         label: "EXO",
         src: "assets/badges/exo.png",
         alt: "EXO icon"
+      },
+      {
+        label: "Adidas",
+        src: "assets/badges/adidas.svg",
+        alt: "Adidas icon"
+      },
+      {
+        label: "Apple Music",
+        src: "assets/badges/apple-music.svg",
+        alt: "Apple Music icon"
+      },
+      {
+        label: "Bilibili",
+        src: "assets/badges/bilibili.svg",
+        alt: "Bilibili icon"
+      },
+      {
+        label: "ROG",
+        src: "assets/badges/Asus-rog.svg",
+        alt: "ROG icon"
+      },
+      {
+        label: "COROS",
+        src: "assets/badges/coros.svg",
+        alt: "COROS icon"
+      },
+      {
+        label: "Valorant",
+        src: "assets/badges/VALORANT.svg",
+        alt: "Valorant icon"
       }
     ]
   },

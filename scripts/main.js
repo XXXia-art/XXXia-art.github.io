@@ -1,6 +1,6 @@
-import { siteContent } from "../data/site-content.js?v=20260604-kpop-icons";
-import { initInteractive } from "./interactive.js?v=20260604-kpop-icons";
-import { initPoemPanel } from "./poem-panel.js?v=20260604-kpop-icons";
+import { siteContent } from "../data/site-content.js?v=20260605-valorant";
+import { initInteractive } from "./interactive.js?v=20260605-valorant";
+import { initPoemPanel } from "./poem-panel.js?v=20260605-valorant";
 
 window.__resumeBooted = true;
 
@@ -118,12 +118,18 @@ const renderBadgeWall = (badgeWall) => {
     return;
   }
 
+  const badgeVersion = badgeWall.version ? `?v=${badgeWall.version}` : "";
+
   appBadgeWall.innerHTML = `
     <div class="badge-wall-inner">
+      <div class="badge-wall-header">
+        ${badgeWall.eyebrow ? `<p class="badge-wall-eyebrow">${badgeWall.eyebrow}</p>` : ""}
+        ${badgeWall.title ? `<h2 class="badge-wall-title">${badgeWall.title}</h2>` : ""}
+      </div>
       <div class="badge-wall-grid">
         ${badgeWall.items.map((item) => `
           <figure class="wall-medal">
-            <img src="${item.src}" alt="${item.alt}" loading="lazy">
+            <img src="${item.src}${badgeVersion}" alt="${item.alt}" loading="lazy">
           </figure>
         `).join("")}
       </div>
