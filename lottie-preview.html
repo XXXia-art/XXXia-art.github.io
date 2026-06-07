@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>无法被化简的我 - Animation Preview</title>
+  <style>
+    :root {
+      --bg: #0B1020;
+      --main: #E8ECFF;
+      --accent: #7AA2FF;
+      --dust: #AAB6FF;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      color: var(--main);
+      font-family: Georgia, "Noto Serif SC", "Songti SC", serif;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(122, 162, 255, 0.16), transparent 34%),
+        radial-gradient(circle at 20% 20%, rgba(170, 182, 255, 0.08), transparent 28%),
+        var(--bg);
+    }
+
+    .preview-shell {
+      width: min(860px, 100%);
+      display: grid;
+      gap: 18px;
+      justify-items: center;
+    }
+
+    .stage {
+      width: min(720px, 100%);
+      aspect-ratio: 3 / 2;
+      border: 1px solid rgba(232, 236, 255, 0.12);
+      border-radius: 18px;
+      background: #0B1020;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+      overflow: hidden;
+    }
+
+    .sqrt-path {
+      stroke-dasharray: 420;
+      stroke-dashoffset: 420;
+      animation: drawRoot 4s cubic-bezier(0.2, 0, 0, 1) infinite;
+    }
+
+    .three {
+      opacity: 0;
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: floatThree 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    .decimal {
+      opacity: 0;
+      animation: decimalFlow 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    .dust {
+      opacity: 0;
+      animation: dustDrift 4s ease-in-out infinite;
+    }
+
+    .dot-one,
+    .dot-two,
+    .dot-three {
+      opacity: 0;
+      animation: leaveCenter 4s ease-in-out infinite;
+    }
+
+    .dot-two {
+      animation-delay: 0.22s;
+    }
+
+    .dot-three {
+      animation-delay: 0.44s;
+    }
+
+    .identity,
+    .tagline {
+      opacity: 0;
+      animation: finalWords 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    .tagline {
+      animation-delay: 0.25s;
+    }
+
+    .glow {
+      opacity: 0;
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 5vw, 44px);
+      line-height: 1.1;
+      letter-spacing: 0.03em;
+    }
+
+    p {
+      max-width: 620px;
+      margin: 0;
+      color: var(--dust);
+      text-align: center;
+      line-height: 1.8;
+    }
+
+    code {
+      color: var(--main);
+      font-family: "Cascadia Code", Consolas, monospace;
+    }
+
+    @keyframes drawRoot {
+      0% { stroke-dashoffset: 420; opacity: 1; }
+      28% { stroke-dashoffset: 0; opacity: 1; }
+      82% { stroke-dashoffset: 0; opacity: 1; }
+      100% { stroke-dashoffset: 420; opacity: 0.9; }
+    }
+
+    @keyframes floatThree {
+      0%, 16% { opacity: 0; transform: translate(120px, -18px) scale(0.72) rotate(-7deg); }
+      38% { opacity: 1; transform: translate(0, 0) scale(1.06) rotate(0deg); }
+      72% { opacity: 1; transform: translate(-2px, -6px) scale(1.02) rotate(1deg); }
+      100% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
+    }
+
+    @keyframes decimalFlow {
+      0%, 34% { opacity: 0; transform: translate(-80px, -8px) scale(0.94); }
+      48% { opacity: 0.72; transform: translate(0, 0) scale(1); }
+      74% { opacity: 0.5; transform: translate(120px, 12px) scale(0.96); }
+      100% { opacity: 0; transform: translate(220px, 24px) scale(0.88); }
+    }
+
+    @keyframes dustDrift {
+      0%, 36% { opacity: 0; transform: translate(0, 0); }
+      52% { opacity: 0.85; }
+      100% { opacity: 0; transform: translate(180px, 36px); }
+    }
+
+    @keyframes leaveCenter {
+      0%, 18% { opacity: 0; transform: translate(0, 0) scale(1); }
+      34% { opacity: 0.5; }
+      82% { opacity: 0.2; transform: translate(var(--x), var(--y)) scale(0.82); }
+      100% { opacity: 0; transform: translate(calc(var(--x) * 1.2), calc(var(--y) * 1.2)) scale(0.7); }
+    }
+
+    @keyframes finalWords {
+      0%, 64% { opacity: 0; transform: translateY(18px); }
+      82%, 100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 20% { opacity: 0; transform: scale(0.98); }
+      54% { opacity: 0.22; transform: scale(1.05); }
+      100% { opacity: 0.16; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <main class="preview-shell">
+    <h1>无法被化简的我</h1>
+    <svg class="stage" viewBox="0 0 720 480" role="img" aria-label="根号三加载动画预览">
+      <rect width="720" height="480" fill="#0B1020"></rect>
+      <ellipse class="glow" cx="360" cy="222" rx="128" ry="84" fill="#7AA2FF"></ellipse>
+
+      <circle class="dot-one" style="--x: -230px; --y: -118px;" cx="360" cy="240" r="5" fill="#AAB6FF"></circle>
+      <circle class="dot-two" style="--x: 240px; --y: -120px;" cx="360" cy="240" r="4" fill="#AAB6FF"></circle>
+      <circle class="dot-three" style="--x: -210px; --y: 116px;" cx="360" cy="240" r="3.5" fill="#7AA2FF"></circle>
+
+      <g transform="translate(220 120)">
+        <path class="sqrt-path" d="M16 108C25 108 35 108 43 108C47 108 49 111 51 115L62 140C65 149 72 151 76 142L109 48C112 38 118 32 128 32H206" fill="none" stroke="#E8ECFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"></path>
+      </g>
+
+      <text class="three" x="386" y="228" text-anchor="middle" fill="#E8ECFF" font-size="92" font-family="Georgia, serif">3</text>
+      <text class="decimal" x="360" y="332" text-anchor="middle" fill="#AAB6FF" font-size="25" font-family="Georgia, serif" letter-spacing="4">1.7320508...</text>
+
+      <circle class="dust" cx="438" cy="352" r="3" fill="#AAB6FF"></circle>
+      <circle class="dust" cx="494" cy="310" r="2.5" fill="#7AA2FF" style="animation-delay: 0.16s;"></circle>
+      <circle class="dust" cx="522" cy="384" r="3.5" fill="#AAB6FF" style="animation-delay: 0.32s;"></circle>
+
+      <text class="identity" x="360" y="390" text-anchor="middle" fill="#E8ECFF" font-size="32" font-family="'Noto Serif SC', 'Songti SC', serif" letter-spacing="3">孤独的根号三</text>
+      <text class="tagline" x="360" y="430" text-anchor="middle" fill="#7AA2FF" font-size="19" font-family="'Noto Serif SC', 'Songti SC', serif" letter-spacing="2">不被整除，也不必合群。</text>
+    </svg>
+    <p>
+      这是无需外部依赖的本地 SVG/CSS 预览。正式 Lottie 文件仍然在
+      <code>assets/animations/irreducible-sqrt3-loader.json</code>。
+    </p>
+  </main>
+</body>
+</html>

@@ -134,6 +134,16 @@
         label: "Valorant",
         src: "assets/badges/VALORANT.svg",
         alt: "Valorant icon"
+      },
+      {
+        label: "Edge",
+        src: "assets/badges/edge.svg",
+        alt: "Microsoft Edge icon"
+      },
+      {
+        label: "Feishu",
+        src: "assets/badges/feishu.svg",
+        alt: "Feishu icon"
       }
     ]
   },
@@ -143,7 +153,7 @@
       title: "News",
       type: "timeline",
       items: [
-        { date: "<em>[2026.06]</em>", text: " I used Unity to create a VR version of the gun practice software🎯." },
+        { date: "<em>[2026.06]</em>", text: " I used Unity to create a VR version of the gun practice software🎯https://github.com/XXXia-art/VR-aimlab." },
         { date: "<em>[2026.05]</em>", text: " I am currently developing <em><strong>a grand board game</strong></em>💰." },
         { date: "<em>[2026.04]</em>", text: " Building my <em><strong>personal website</strong></em> on GitHub Pages." },
         { date: "<em>[2026.03]</em>", text: " Working on <em><strong>sequential unlearning</strong></em> methods for diffusion models." },

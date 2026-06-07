@@ -1,6 +1,6 @@
-import { siteContent } from "../data/site-content.js?v=20260605-valorant";
-import { initInteractive } from "./interactive.js?v=20260605-valorant";
-import { initPoemPanel } from "./poem-panel.js?v=20260605-valorant";
+import { siteContent } from "../data/site-content.js?v=20260607-edge-feishu";
+import { initInteractive } from "./interactive.js?v=20260607-edge-feishu";
+import { initPoemPanel } from "./poem-panel.js?v=20260607-edge-feishu";
 
 window.__resumeBooted = true;
 
@@ -129,12 +129,126 @@ const renderBadgeWall = (badgeWall) => {
       <div class="badge-wall-grid">
         ${badgeWall.items.map((item) => `
           <figure class="wall-medal">
-            <img src="${item.src}${badgeVersion}" alt="${item.alt}" loading="lazy">
+            <img src="${item.src}${badgeVersion}" alt="${item.alt}" loading="eager" decoding="async">
           </figure>
         `).join("")}
       </div>
     </div>
   `;
+};
+
+const initBadgeWallIntro = (root) => {
+  if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    root?.classList.add("is-intro-complete");
+    return;
+  }
+
+  const medals = [...root.querySelectorAll(".wall-medal")];
+  const headerParts = [...root.querySelectorAll(".badge-wall-eyebrow, .badge-wall-title")];
+  if (!medals.length) {
+    root.classList.add("is-intro-complete");
+    return;
+  }
+
+  const waitForBadgeImages = () => {
+    const images = [...root.querySelectorAll(".wall-medal img")];
+    const imagePromises = images.map((image) => {
+      if (image.complete && image.naturalWidth > 0) {
+        return Promise.resolve();
+      }
+
+      if (typeof image.decode === "function") {
+        return image.decode().catch(() => {});
+      }
+
+      return new Promise((resolve) => {
+        image.addEventListener("load", resolve, { once: true });
+        image.addEventListener("error", resolve, { once: true });
+      });
+    });
+
+    const timeout = new Promise((resolve) => {
+      window.setTimeout(resolve, 1200);
+    });
+
+    return Promise.race([
+      Promise.all(imagePromises),
+      timeout
+    ]);
+  };
+
+  const finishIntro = () => {
+    root.classList.remove("is-intro-ready");
+    root.classList.add("is-intro-complete");
+  };
+
+  const playFallbackIntro = () => {
+    const headerAnimations = headerParts.map((element, index) => element.animate([
+      { opacity: 0, transform: "translateY(8px)" },
+      { opacity: 1, transform: "translateY(0)" }
+    ], {
+      duration: 420,
+      delay: 40 + index * 70,
+      easing: "cubic-bezier(.22,.8,.26,1)",
+      fill: "forwards"
+    }));
+
+    const medalAnimations = medals.map((element, index) => element.animate([
+      { opacity: 0, transform: "translate3d(0, 10px, 0) scale(.98)" },
+      { opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" }
+    ], {
+      duration: 520,
+      delay: 120 + index * 34,
+      easing: "cubic-bezier(.22,.8,.26,1)",
+      fill: "forwards"
+    }));
+
+    Promise.all([...headerAnimations, ...medalAnimations].map((animation) => animation.finished))
+      .then(finishIntro)
+      .catch(finishIntro);
+  };
+
+  const playAnimeIntro = async () => {
+    root.classList.add("is-intro-ready");
+    await waitForBadgeImages();
+
+    try {
+      const timeout = new Promise((_, reject) => {
+        window.setTimeout(() => reject(new Error("anime.js import timed out")), 900);
+      });
+      const { animate, stagger } = await Promise.race([
+        import("https://cdn.jsdelivr.net/npm/animejs@4/+esm"),
+        timeout
+      ]);
+
+      if (typeof animate !== "function" || typeof stagger !== "function") {
+        throw new TypeError("anime.js exports were not available");
+      }
+
+      animate(headerParts, {
+        opacity: [0, 1],
+        y: [8, 0],
+        duration: 420,
+        delay: stagger(70, { start: 40 }),
+        ease: "out(2)"
+      });
+
+      animate(medals, {
+        opacity: [0, 1],
+        y: [10, 0],
+        scale: [0.98, 1],
+        duration: 560,
+        delay: stagger(34, { start: 120 }),
+        ease: "out(2)"
+      });
+
+      window.setTimeout(finishIntro, 120 + medals.length * 34 + 580);
+    } catch {
+      playFallbackIntro();
+    }
+  };
+
+  playAnimeIntro();
 };
 
 const renderHeader = (header) => {
@@ -146,7 +260,7 @@ const renderHeader = (header) => {
     </div>
     <div class="photo-box">
       <div class="photo-wrap">
-        <img class="profile-photo" src="${header.photo.src}" alt="${header.photo.alt}">
+        <img class="profile-photo" src="${header.photo.src}" alt="${header.photo.alt}" fetchpriority="high" decoding="sync">
       </div>
       <div class="icon-row">
         <a href="https://github.com/XXXia-art" target="_blank" rel="noreferrer" aria-label="GitHub">
@@ -275,6 +389,7 @@ try {
   renderPoemSidebar(siteContent.poemPanel);
   renderBadgeWall(siteContent.badgeWall);
   renderHeader(siteContent.header);
+  initBadgeWallIntro(appBadgeWall);
   renderSections(siteContent.sections);
   renderFooter(siteContent.footer);
 

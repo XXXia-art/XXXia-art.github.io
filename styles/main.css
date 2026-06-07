@@ -144,6 +144,21 @@ img {
   line-height: 0.96;
 }
 
+.badge-wall.is-intro-ready .badge-wall-eyebrow,
+.badge-wall.is-intro-ready .badge-wall-title,
+.badge-wall.is-intro-ready .wall-medal {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.badge-wall.is-intro-complete .badge-wall-eyebrow,
+.badge-wall.is-intro-complete .badge-wall-title,
+.badge-wall.is-intro-complete .wall-medal {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
 .badge-wall-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -156,6 +171,7 @@ img {
   display: grid;
   justify-items: center;
   color: rgba(31, 41, 55, 0.72);
+  transform: translateZ(0);
 }
 
 .wall-medal img {
