@@ -1,4 +1,4 @@
-import { siteContent } from "../data/site-content.js?v=20261023-your-name";
+import { siteContent } from "../data/site-content.js?v=20261023-training-gallery-ten";
 import { initInteractive } from "./interactive.js?v=20260607-edge-feishu";
 import { initPoemPanel } from "./poem-panel.js?v=20261023-poem-local";
 
@@ -311,6 +311,18 @@ const renderExperience = (section) => `
           <span class="exp-period">${item.period}</span>
         </div>
         <p class="exp-desc">${item.description}</p>
+        ${item.photos ? `
+          <figure class="exp-gallery">
+            <div class="exp-photo-strip">
+              ${item.photos.map((photo) => `
+                <a class="exp-photo${photo.wide ? " exp-photo-wide" : ""}${photo.shape ? " exp-photo-" + photo.shape : ""}" href="${photo.src}" target="_blank" rel="noopener noreferrer" aria-label="View full-size photo: ${photo.alt}">
+                  <img src="${photo.src}" alt="${photo.alt}">
+                </a>
+              `).join("")}
+            </div>
+            ${item.photoCaption ? `<figcaption class="exp-gallery-caption">${item.photoCaption}</figcaption>` : ""}
+          </figure>
+        ` : ""}
       </li>
     `).join("")}
   </ul>

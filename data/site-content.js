@@ -177,14 +177,8 @@
           title: "Sequential Concept Unlearning for Stable Diffusion",
           description:
             "A research project on improving multi-step concept erasure while reducing interference with prior edits and preserving generation quality."
-        },
-
-        {
-          title: "Positional Sensitivity of ICL in DLLMs",
-          description:
-            "A systematic analysis of positional bias in Diffusion LLMs. We reveal that query position is a first-order variable affecting ICL performance, identify a Recency Effect via Attention Rollout."
         }
-      
+
       ]
     },
     {
@@ -192,6 +186,29 @@
       title: "Experience",
       type: "experience",
       items: [
+          {
+          badge: {
+            src: "assets/badges/seu-flag-guard.svg",
+            alt: "seu-flag-guard logo"
+          },
+          organization: "Military Training for the 2026 Class at SEU",
+          role: "Student Drill Instructor",
+          period: "Aug. 2026 - Sep. 2026",
+          description: "Served as a student drill instructor for the Flag Guard Formation during freshman military training at Southeast University, responsible for drill instruction, formation coordination, and training discipline.",
+          photos: [
+            { src: "assets/experience/seu-training-group.jpg", alt: "Flag Guard Formation group photo during military training at SEU", wide: true },
+            { src: "assets/experience/seu-training-profile.jpg", alt: "Side profile during military training at SEU" },
+            { src: "assets/experience/seu-training-evening.jpg", alt: "Evening portrait during military training at SEU" },
+            { src: "assets/experience/seu-training-polaroid.jpg", alt: "Printed photo of the military training group at night" },
+            { src: "assets/experience/seu-training-celebration.jpg", alt: "Celebration during military training at SEU" },
+            { src: "assets/experience/seu-training-night-friends.jpg", alt: "Friends celebrating together at night during military training at SEU" },
+            { src: "assets/experience/seu-training-elevator-group.jpg", alt: "Group photo together in an elevator", shape: "panorama" },
+            { src: "assets/experience/seu-training-uniform-selfie.jpg", alt: "Photo with a flag guard member in uniform", shape: "panorama" },
+            { src: "assets/experience/seu-training-evening-friends.jpg", alt: "Group selfie with friends at night" },
+            { src: "assets/experience/seu-training-track-group.jpg", alt: "Group photo with flag guard members on the training track", shape: "landscape" }
+          ],
+          photoCaption: "SEU Flag Guard · 2026"
+        },
         {
           badge: {
             src: "assets/affiliations/huawei.svg",
@@ -202,6 +219,7 @@
           period: "Jul. 2025 - Sep. 2025",
           description: "Worked on model editing and generative model related research projects."
         }
+
       ]
     },
     {
