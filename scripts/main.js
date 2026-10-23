@@ -1,4 +1,4 @@
-import { siteContent } from "../data/site-content.js?v=20261023-training-gallery-ten";
+import { siteContent } from "../data/site-content.js?v=20261023-training-gallery-uncropped";
 import { initInteractive } from "./interactive.js?v=20260607-edge-feishu";
 import { initPoemPanel } from "./poem-panel.js?v=20261023-poem-local";
 

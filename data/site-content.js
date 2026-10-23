@@ -204,7 +204,7 @@
             { src: "assets/experience/seu-training-night-friends.jpg", alt: "Friends celebrating together at night during military training at SEU" },
             { src: "assets/experience/seu-training-elevator-group.jpg", alt: "Group photo together in an elevator", shape: "panorama" },
             { src: "assets/experience/seu-training-uniform-selfie.jpg", alt: "Photo with a flag guard member in uniform", shape: "panorama" },
-            { src: "assets/experience/seu-training-evening-friends.jpg", alt: "Group selfie with friends at night" },
+            { src: "assets/experience/seu-training-evening-friends.jpg", alt: "Group selfie with friends at night", shape: "landscape" },
             { src: "assets/experience/seu-training-track-group.jpg", alt: "Group photo with flag guard members on the training track", shape: "landscape" }
           ],
           photoCaption: "SEU Flag Guard · 2026"
