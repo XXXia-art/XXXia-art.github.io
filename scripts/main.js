@@ -1,6 +1,6 @@
-import { siteContent } from "../data/site-content.js?v=20260607-edge-feishu";
+import { siteContent } from "../data/site-content.js?v=20261023-your-name";
 import { initInteractive } from "./interactive.js?v=20260607-edge-feishu";
-import { initPoemPanel } from "./poem-panel.js?v=20260607-edge-feishu";
+import { initPoemPanel } from "./poem-panel.js?v=20261023-poem-local";
 
 window.__resumeBooted = true;
 

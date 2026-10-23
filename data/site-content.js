@@ -31,7 +31,7 @@
     subtitle: "Junior Student, Southeast University",
     summary: [
       "My main interests lie in design, super AI, and market forecasting.",
-      "I am currently working on improving the stability and robustness of sequential editing methods for diffusion models."
+      "I am currently studying the ICL feature of VLA."
     ],
     badges: [
       {
@@ -144,6 +144,16 @@
         label: "Feishu",
         src: "assets/badges/feishu.svg",
         alt: "Feishu icon"
+      },
+      {
+        label: "SEU Flag Guard",
+        src: "assets/badges/seu-flag-guard.svg",
+        alt: "Southeast University National Flag Guard emblem"
+      },
+      {
+        label: "Obsidian",
+        src: "assets/badges/obsidian.svg",
+        alt: "Obsidian logo"
       }
     ]
   },
@@ -155,7 +165,6 @@
       items: [
         { date: "<em>[2026.06]</em>", text: " I used Unity to create a VR version of the gun practice software🎯https://github.com/XXXia-art/VR-aimlab." },
         { date: "<em>[2026.05]</em>", text: " I am currently developing <em><strong>a grand board game</strong></em>💰." },
-        { date: "<em>[2026.04]</em>", text: " Building my <em><strong>personal website</strong></em> on GitHub Pages." },
         { date: "<em>[2026.03]</em>", text: " Working on <em><strong>sequential unlearning</strong></em> methods for diffusion models." },
       ]
     },
@@ -203,18 +212,22 @@
       items: [
         {
           title: "Books",
-          description: "《One Hundred Years of Solitude》《Rage of Angels》",
+          description: "《One Hundred Years of Solitude》《Rage of Angels》《Firefly Lane》《No Longer Human》",
           images: [
             { src: "assets/interests/books/100-years-solitude.jpg", alt: "One Hundred Years of Solitude" },
-            { src: "assets/interests/books/rage-of-angels.jpg", alt: "Rage of Angels" }
+            { src: "assets/interests/books/rage-of-angels.jpg", alt: "Rage of Angels" },
+            { src: "assets/interests/books/firefly-lane.png", alt: "Firefly Lane" },
+            { src: "assets/interests/books/no-longer-human.png", alt: "No Longer Human" }
           ]
         },
         {
           title: "Movies",
-          description: "《The Shawshank Redemption》《Green Book》",
+          description: "《The Shawshank Redemption》《Green Book》《The Wandering Earth II》《Your Name.》",
           images: [
             { src: "assets/interests/movies/shawshank.jpg", alt: "The Shawshank Redemption" },
-            { src: "assets/interests/movies/green-book.jpg", alt: "Green Book" }
+            { src: "assets/interests/movies/green-book.jpg", alt: "Green Book" },
+            { src: "assets/interests/movies/wandering-earth-2.png", alt: "The Wandering Earth II" },
+            { src: "assets/interests/movies/your-name.png", alt: "Your Name." }
           ]
         }
       ]
